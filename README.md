@@ -20,3 +20,5 @@ Base plug & play ESX Legacy
 Je n'ai rien inventé, cette base a été faite à base de toutes les ressources précédemment citées. Adaptées et traduites, ensemble elles forment une base facile à utiliser et rapide à mettre en place.
 
 Pour tout support, rejoignez : https://discord.gg/tHBNmxbMnr
+
+...
