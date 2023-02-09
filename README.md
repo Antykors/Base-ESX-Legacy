@@ -10,7 +10,7 @@ Base plug & play ESX Legacy
 - Ox_inventory (https://github.com/overextended/ox_inventory) (ajout des factions) by @SUP2Ak#3755
 - Ox_target (https://github.com/overextended/ox_target) (ajout des factions) by @SUP2Ak#3755
 - Ox_Fuel : (https://github.com/overextended/ox_fuel) by Overextended
-- Ox_Doorlock : (https://github.com/overextended/ox_doorlock) (Fonctionne avec les factions) by @SUP2Ak#3755
+- Ox_Doorlock : (https://github.com/overextended/ox_doorlock) (ajout des factions) by @SUP2Ak#3755
 - Cc-chat : (https://github.com/Concept-Collective/cc-chat) by Concept Collective
 - Cc-rpchat : (https://github.com/Concept-Collective/cc-rpchat) by Concept Collective
 - Ts-adminmenu : (https://github.com/tony-stark-17/ts-adminmenu) by Tony-stark-17
