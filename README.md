@@ -15,7 +15,8 @@ Base plug & play ESX Legacy
 - Cc-rpchat : (https://github.com/Concept-Collective/cc-rpchat) by Concept Collective
 - Ts-adminmenu : (https://github.com/tony-stark-17/ts-adminmenu) by Tony-stark-17
 - Illenium-appearance : (https://github.com/iLLeniumStudios/illenium-appearance) by iLLenium Studios
+- East_hud : (https://github.com/eastdev/east_hud) by eastdev
 
-Je n'ai rien inventé, cette base a été faite à base de toutes les ressources précédement cités. Adaptés et traduites, ensembles elles forment une base facile à utiliser et rapide à mettre en place.
+Je n'ai rien inventé, cette base a été faite à base de toutes les ressources précédemment citées. Adaptées et traduites, ensemble elles forment une base facile à utiliser et rapide à mettre en place.
 
 Pour tout support, rejoignez : https://discord.gg/tHBNmxbMnr
