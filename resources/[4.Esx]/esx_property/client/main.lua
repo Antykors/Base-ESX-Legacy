@@ -143,7 +143,10 @@ function OpenInteractionMenu(PropertyId, Interaction)
   local Property = Properties[PropertyId]
   if Property.Owned then
     if Interaction == "Wardrobe" then
-      Config.WardrobeInteraction(PropertyId, Interaction)
+      --Config.WardrobeInteraction(PropertyId, Interaction)
+      TriggerEvent("illenium-appearance:client:openOutfitMenu", function()
+        OpenMenu(nil, "outfit")
+      end)
     elseif Interaction == "Storage" then
       if Config.OxInventory then
         exports.ox_inventory:openInventory('stash', {id = 'property-' .. PropertyId, owner = Property.Owner})
