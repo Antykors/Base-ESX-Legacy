@@ -18,11 +18,6 @@ end)
 RegisterNetEvent("esx:setJob", function(job)
 	Framework.PlayerData.job = job
     client.job = Framework.PlayerData.job
-    -- client.gang = Framework.PlayerData.job
-end)
-
-RegisterNetEvent("esx:setFaction", function(faction)
-	Framework.PlayerData.faction = faction
     client.gang = Framework.PlayerData.faction
 end)
 
