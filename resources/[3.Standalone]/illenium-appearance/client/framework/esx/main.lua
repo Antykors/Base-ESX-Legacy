@@ -16,9 +16,9 @@ RegisterNetEvent("esx:onPlayerLogout", function()
 end)
 
 RegisterNetEvent("esx:setJob", function(job)
-	Framework.PlayerData.job = job
+    Framework.PlayerData.job = job
     client.job = Framework.PlayerData.job
-    client.gang = Framework.PlayerData.faction
+    client.gang = Framework.PlayerData.faction -- Ajout de la compatibilité avec les factions
 end)
 
 function Framework.GetPlayerGender()
