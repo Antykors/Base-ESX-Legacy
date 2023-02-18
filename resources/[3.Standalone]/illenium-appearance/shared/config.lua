@@ -128,42 +128,42 @@ Config.TargetConfig = {
         model = "s_f_m_shop_high",
         scenario = "WORLD_HUMAN_STAND_MOBILE",
         icon = "fas fa-tshirt",
-        label = "Open Clothing Store",
+        label = "Accéder au Magasin de vêtements",
         distance = 3
     },
     ["barber"] = {
         model = "s_m_m_hairdress_01",
         scenario = "WORLD_HUMAN_STAND_MOBILE",
         icon = "fas fa-scissors",
-        label = "Open Barber Shop",
+        label = "Accéder au Barbier",
         distance = 3
     },
     ["tattoo"] = {
         model = "u_m_y_tattoo_01",
         scenario = "WORLD_HUMAN_STAND_MOBILE",
         icon = "fas fa-pen",
-        label = "Open Tattoo Shop",
+        label = "Accéder au Tatoueur",
         distance = 3
     },
     ["surgeon"] = {
         model = "s_m_m_doctor_01",
         scenario = "WORLD_HUMAN_STAND_MOBILE",
         icon = "fas fa-scalpel",
-        label = "Open Surgeon",
+        label = "Accéder au Chirurgien",
         distance = 3
     },
     ["clothingroom"] = {
         model = "mp_g_m_pros_01",
         scenario = "WORLD_HUMAN_STAND_MOBILE",
         icon = "fas fa-sign-in-alt",
-        label = "Open Job / Gang Clothes Menu",
+        label = "Ouvrir le vestiaire",
         distance = 3
     },
     ["playeroutfitroom"] = {
         model = "mp_g_m_pros_01",
         scenario = "WORLD_HUMAN_STAND_MOBILE",
         icon = "fas fa-sign-in-alt",
-        label = "Open Outfits Menu",
+        label = "Ouvrir le vestiaire",
         distance = 3
     },
 }
@@ -549,10 +549,14 @@ Config.Stores = {
             vector3(296.28656005859, -570.330078125, 43.26)
         }
     },
+
 }
 
 
 Config.ClothingRooms = {
+    
+    -- Factions
+    
     {
         gang = "lost",
         coords = vector4(987.0, -92.9, 74.8, 42.0),
@@ -569,7 +573,25 @@ Config.ClothingRooms = {
             vector3(454.35513305664, -988.46459960938, 30.69),
             vector3(460.4231262207, -987.94573974609, 30.69)
         }
-    }
+    },
+
+    {
+        gang = "ballas",
+        coords = vector4(76.4, -1948.1, 21.1, 233.9),
+        size = vector3(4, 4, 4),
+        rotation = 45,
+        usePoly = false,
+        points = {
+            vector3(460.41918945312, -993.11444091797, 30.69),
+            vector3(449.39508056641, -993.60614013672, 30.69),
+            vector3(449.88696289062, -990.23779296875, 30.69),
+            vector3(450.97882080078, -989.71411132812, 30.69),
+            vector3(451.0325012207, -987.89904785156, 30.69),
+            vector3(453.47863769531, -987.76928710938, 30.69),
+            vector3(454.35513305664, -988.46459960938, 30.69),
+            vector3(460.4231262207, -987.94573974609, 30.69)
+        }
+    },
 }
 
 
@@ -930,10 +952,52 @@ Config.Outfits = {
             }
         }
     },
-    
+
     -- Factions
 
     ["lost"] = {
+        ["Male"] = {
+            {
+                -- Outfits
+                name = "Worker",
+                outfitData = {
+                    ["pants"]       = { item = 28, texture = 0},  -- Pants
+                    ["arms"]        = { item = 1, texture = 0},  -- Arms
+                    ["t-shirt"]     = { item = 31, texture = 0},  -- T Shirt
+                    ["vest"]        = { item = 0, texture = 0},  -- Body Vest
+                    ["torso2"]      = { item = 294, texture = 0},  -- Jacket
+                    ["shoes"]       = { item = 10, texture = 0},  -- Shoes
+                    ["accessory"]   = { item = 0, texture = 0},  -- Neck Accessory
+                    ["bag"]         = { item = 0, texture = 0},  -- Bag
+                    ["hat"]         = { item = 12, texture = -1},  -- Hat
+                    ["glass"]       = { item = 0, texture = 0},  -- Glasses
+                    ["mask"]        = { item = 0, texture = 0},  -- Mask
+                },
+                grades = {0, 1, 2, 3, 4},
+            }
+        },
+        ["Female"] = {
+            {
+                name = "Worker",
+                outfitData = {
+                    ["pants"]       = { item = 57, texture = 2},  -- Pants
+                    ["arms"]        = { item = 0, texture = 0},  -- Arms
+                    ["t-shirt"]     = { item = 34, texture = 0},  -- T Shirt
+                    ["vest"]        = { item = 0, texture = 0},  -- Body Vest
+                    ["torso2"]      = { item = 105, texture = 7},  -- Jacket
+                    ["shoes"]       = { item = 8, texture = 5},  -- Shoes
+                    ["accessory"]   = { item = 11, texture = 3},  -- Neck Accessory
+                    ["bag"]         = { item = 0, texture = 0},  -- Bag
+                    ["hat"]         = { item = -1, texture = -1},  -- Hat
+                    ["glass"]       = { item = 0, texture = 0},  -- Glasses
+                    ["mask"]        = { item = 0, texture = 0},  -- Mask
+                },
+                grades = {0, 1, 2, 3, 4},
+            }
+        }
+    },
+
+    ["ballas"] = {
         ["Male"] = {
             {
                 -- Outfits
