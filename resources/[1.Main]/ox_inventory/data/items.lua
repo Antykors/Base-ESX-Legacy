@@ -1,7 +1,7 @@
 return {
 	['testburger'] = {
 		label = 'Test Burger',
-		weight = 220,
+		weight = 1,
 		degrade = 60,
 		client = {
 			status = { hunger = 200000 },
@@ -33,7 +33,7 @@ return {
 
 	['bandage'] = {
 		label = 'Bandage',
-		weight = 115,
+		weight = 1,
 		client = {
 			anim = { dict = 'missheistdockssetup1clipboard@idle_a', clip = 'idle_a', flag = 49 },
 			prop = { model = `prop_rolled_sock_02`, pos = vec3(-0.14, -0.14, -0.08), rot = vec3(-50.0, -50.0, 0.0) },
@@ -48,7 +48,7 @@ return {
 
 	['burger'] = {
 		label = 'Burger',
-		weight = 220,
+		weight = 1,
 		client = {
 			status = { hunger = 200000 },
 			anim = 'eating',
@@ -60,7 +60,7 @@ return {
 
 	['cola'] = {
 		label = 'eCola',
-		weight = 350,
+		weight = 1,
 		client = {
 			status = { thirst = 200000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
@@ -72,7 +72,7 @@ return {
 
 	['parachute'] = {
 		label = 'Parachute',
-		weight = 8000,
+		weight = 1,
 		stack = false,
 		client = {
 			anim = { dict = 'clothingshirt', clip = 'try_shirt_positive_d' },
@@ -98,7 +98,7 @@ return {
 
 	['panties'] = {
 		label = 'Knickers',
-		weight = 10,
+		weight = 1,
 		consume = 0,
 		client = {
 			status = { thirst = -100000, stress = -25000 },
@@ -110,12 +110,12 @@ return {
 
 	['lockpick'] = {
 		label = 'Lockpick',
-		weight = 160,
+		weight = 1,
 	},
 
 	['phone'] = {
 		label = 'Phone',
-		weight = 190,
+		weight = 1,
 		stack = false,
 		consume = 0,
 		client = {
@@ -139,7 +139,7 @@ return {
 
 	['mustard'] = {
 		label = 'Mustard',
-		weight = 500,
+		weight = 1,
 		client = {
 			status = { hunger = 25000, thirst = 25000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
@@ -151,7 +151,7 @@ return {
 
 	['water'] = {
 		label = 'Water',
-		weight = 500,
+		weight = 1,
 		client = {
 			status = { thirst = 200000 },
 			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
@@ -164,14 +164,14 @@ return {
 
 	['radio'] = {
 		label = 'Radio',
-		weight = 1000,
+		weight = 1,
 		stack = false,
 		allowArmed = true
 	},
 
 	['armour'] = {
 		label = 'Bulletproof Vest',
-		weight = 3000,
+		weight = 1,
 		stack = false,
 		client = {
 			anim = { dict = 'clothingshirt', clip = 'try_shirt_positive_d' },
@@ -187,17 +187,17 @@ return {
 	['mastercard'] = {
 		label = 'Mastercard',
 		stack = false,
-		weight = 10,
+		weight = 1,
 	},
 
 	['scrapmetal'] = {
 		label = 'Scrap Metal',
-		weight = 80,
+		weight = 1,
 	},
 
 	['blowpipe'] = {
 		label = 'Chalumeaux',
-		weight = 2,
+		weight = 1,
 		stack = true,
 		close = true,
 		description = nil
@@ -205,7 +205,7 @@ return {
 
 	['carokit'] = {
 		label = 'Kit carosserie',
-		weight = 3,
+		weight = 1,
 		stack = true,
 		close = true,
 		description = nil
@@ -213,7 +213,7 @@ return {
 
 	['carotool'] = {
 		label = 'outils carosserie',
-		weight = 2,
+		weight = 1,
 		stack = true,
 		close = true,
 		description = nil
@@ -221,7 +221,7 @@ return {
 
 	['fixkit'] = {
 		label = 'Kit réparation',
-		weight = 3,
+		weight = 1,
 		stack = true,
 		close = true,
 		description = nil
@@ -229,7 +229,7 @@ return {
 
 	['fixtool'] = {
 		label = 'outils réparation',
-		weight = 2,
+		weight = 1,
 		stack = true,
 		close = true,
 		description = nil
@@ -237,7 +237,7 @@ return {
 
 	['gazbottle'] = {
 		label = 'bouteille de gaz',
-		weight = 2,
+		weight = 1,
 		stack = true,
 		close = true,
 		description = nil
@@ -245,9 +245,107 @@ return {
 
 	['medikit'] = {
 		label = 'Medikit',
-		weight = 2,
+		weight = 1,
 		stack = true,
 		close = true,
 		description = nil
+	},
+
+	-- Vigneron
+
+	['epinette'] = {
+		label = 'Epinette',
+		weight = 1,
+		stack = false,
+		close = true,
+		description = "Sécateur destiné à récolter le raisin"
+	},
+
+	['raisinrouge'] = {
+		label = 'Raisin rouge',
+		weight = 1,
+		stack = true,
+		close = true,
+		description = "Grappe de raisin rouge"
+	},
+
+	['raisinblanc'] = {
+		label = 'Raisin blanc',
+		weight = 1,
+		stack = true,
+		close = true,
+		description = "Grappe de raisin blanc"
+	},
+
+	['jusraisinrouge'] = {
+		label = 'Jus de raisin rouge',
+		weight = 1,
+		client = {
+			status = { thirst = 350000 },
+			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
+			prop = { model = `prop_ld_flow_bottle`, pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
+			usetime = 2500,
+			cancel = true,
+			notification = 'Vous avez bu un jus de raisins rouges'
+		},
+		stack = true,
+		close = true,
+		description = "Bouteille de jus de raisins rouges"
+	},
+
+	['jusraisinblanc'] = {
+		label = 'Jus de raisin blanc',
+		weight = 1,
+		client = {
+			status = { thirst = 350000 },
+			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
+			prop = { model = `prop_ld_flow_bottle`, pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
+			usetime = 2500,
+			cancel = true,
+			notification = 'Vous avez bu un jus de raisins blancs'
+		},
+		stack = true,
+		close = true,
+		description = "Bouteille de jus de raisins blancs"
+	},
+
+	['vinrouge'] = {
+		label = 'Vin rouge',
+		weight = 1,
+		client = {
+			status = { drunk = 75000 },
+			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
+			prop = { model = `prop_ld_flow_bottle`, pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
+			usetime = 2500,
+			cancel = true,
+			notification = 'Vous avez bu du vin rouge'
+		},
+		stack = true,
+		close = true,
+		description = "Bouteille de vin rouge"
+	},
+
+	['vinblanc'] = {
+		label = 'Vin blanc',
+		weight = 1,
+		client = {
+			status = { drunk = 75000 },
+			anim = { dict = 'mp_player_intdrink', clip = 'loop_bottle' },
+			prop = { model = `prop_ld_flow_bottle`, pos = vec3(0.03, 0.03, 0.02), rot = vec3(0.0, 0.0, -1.5) },
+			usetime = 2500,
+			cancel = true,
+			notification = 'Vous avez bu du vin blanc'
+		},
+		stack = true,
+		close = true,
+		description = "Bouteille de vin blanc"
+	},
+
+	['bottle'] = {
+		label = 'Bouteille vide',
+		weight = 1,
+		stack = true,
+		close = true,
+		description = "Bouteille vide"
 	},
 }
