@@ -549,30 +549,13 @@ Config.Stores = {
             vector3(296.28656005859, -570.330078125, 43.26)
         }
     },
-
-    -- Faction
-
-    {
-        type = "clothing",
-        gang = "lost",
-        coords = vector4(987.0, -92.9, 74.8, 42.0),
-        size = vector3(4, 4, 4),
-        rotation = 45,
-        usePoly = false,
-        points = {
-            vector3(133.60948181152, -210.31390380859, 54.56),
-            vector3(125.8349609375, -228.48097229004, 54.56),
-            vector3(116.3140335083, -225.02020263672, 54.56),
-            vector3(122.56930541992, -207.83396911621, 54.56)
-        }
-    },
 }
 
 
 Config.ClothingRooms = {
     {
-        job = "police",
-        coords = vector4(454.91, -990.89, 30.69, 193.4),
+        gang = "lost",
+        coords = vector4(987.0, -92.9, 74.8, 42.0),
         size = vector3(4, 4, 4),
         rotation = 45,
         usePoly = false,
@@ -946,7 +929,51 @@ Config.Outfits = {
                 grades = {3, 4},
             }
         }
-    }
+    },
+    
+    -- Factions
+
+    ["lost"] = {
+        ["Male"] = {
+            {
+                -- Outfits
+                name = "Worker",
+                outfitData = {
+                    ["pants"]       = { item = 28, texture = 0},  -- Pants
+                    ["arms"]        = { item = 1, texture = 0},  -- Arms
+                    ["t-shirt"]     = { item = 31, texture = 0},  -- T Shirt
+                    ["vest"]        = { item = 0, texture = 0},  -- Body Vest
+                    ["torso2"]      = { item = 294, texture = 0},  -- Jacket
+                    ["shoes"]       = { item = 10, texture = 0},  -- Shoes
+                    ["accessory"]   = { item = 0, texture = 0},  -- Neck Accessory
+                    ["bag"]         = { item = 0, texture = 0},  -- Bag
+                    ["hat"]         = { item = 12, texture = -1},  -- Hat
+                    ["glass"]       = { item = 0, texture = 0},  -- Glasses
+                    ["mask"]        = { item = 0, texture = 0},  -- Mask
+                },
+                grades = {0, 1, 2, 3, 4},
+            }
+        },
+        ["Female"] = {
+            {
+                name = "Worker",
+                outfitData = {
+                    ["pants"]       = { item = 57, texture = 2},  -- Pants
+                    ["arms"]        = { item = 0, texture = 0},  -- Arms
+                    ["t-shirt"]     = { item = 34, texture = 0},  -- T Shirt
+                    ["vest"]        = { item = 0, texture = 0},  -- Body Vest
+                    ["torso2"]      = { item = 105, texture = 7},  -- Jacket
+                    ["shoes"]       = { item = 8, texture = 5},  -- Shoes
+                    ["accessory"]   = { item = 11, texture = 3},  -- Neck Accessory
+                    ["bag"]         = { item = 0, texture = 0},  -- Bag
+                    ["hat"]         = { item = -1, texture = -1},  -- Hat
+                    ["glass"]       = { item = 0, texture = 0},  -- Glasses
+                    ["mask"]        = { item = 0, texture = 0},  -- Mask
+                },
+                grades = {0, 1, 2, 3, 4},
+            }
+        }
+    },
 }
 
 Config.InitialPlayerClothes = {
