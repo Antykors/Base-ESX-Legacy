@@ -53,6 +53,7 @@ function OpenCraftMenu()
         if enough >= #items then
             --exports['okokNotify']:Alert(_U("craft_notification_title"), _U("craft_notification_message") .. label, 5000, 'info')
             TaskStartScenarioInPlace(PlayerPedId(), 'PROP_HUMAN_PARKING_METER', 0, true)
+	    menu.close()
             Citizen.Wait(2000)
             ClearPedTasks(PlayerPedId())
             for i=1, #items, 1 do
