@@ -28,10 +28,10 @@ Config.Zones = {
         Pos   = vector3(95.2,-1293.2,29.2), -- defines where the boss menu is
         Name  = "boss", -- /!\ DO NOT TOUCH /!\
     },
-    {
+    --[[{
         Pos   = vector3(105.1,-1303.3,28.7), -- defines where a zone is located /!\ STASHES ARE DEFINED IN CONFIG.STASHES /!\
         Name  = "cloakroom", -- used to decide wich zone to open in main.lua
-    }
+    }]]--
 }
 
 -- Defines the stashes
