@@ -412,13 +412,13 @@ return {
 
     ['money'] = { -- Player currency
         label = 'Money',
-        weight = 2,
+        weight = 0,
         description = "The root of all evil and payer of rent",
     },
 
     ['black_money'] = { -- Player currency
         label = 'Dirty Money',
-        weight = 2,
+        weight = 0,
         description = "If you don't wash this, you're gonna be stinky",
     },
 
