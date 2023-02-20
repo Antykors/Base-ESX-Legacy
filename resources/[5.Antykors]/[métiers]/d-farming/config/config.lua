@@ -6,7 +6,7 @@ Config.ESXLegacy = true
 Config.RadiusSpots = {
     {
         -- Blipname
-        showblip = true,
+        showblip = false,
         blipname = "Récolte de raisins rouges",
         blip = 130,
         blipcolor = 7,
@@ -55,7 +55,7 @@ Config.RadiusSpots = {
 
     {
         -- Blipname
-        showblip = true,
+        showblip = false,
         blipname = "Récolte de raisins blancs",
         blip = 130,
         blipcolor = 7,
