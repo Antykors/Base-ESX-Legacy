@@ -606,6 +606,21 @@ return {
 			durability = 0.03,
 			ammoname = 'ammo-rifle'
 		},
+
+		['WEAPON_PISTOLXM3'] = { -- Los Santos Drug Wars Update
+			label = 'WM 29',
+			weight = 1220,
+			durability = 0.1,
+			ammoname = 'ammo-9', -- change the ammo if you need to
+		},
+
+		['WEAPON_TACTICALRIFLE'] = { -- Criminal Enterprises Update
+			label = 'Service Carbine',
+			weight = 3400,
+			durability = 0.03,
+			ammoname = 'ammo-rifle' -- change the ammo if you need to
+		},
+		
 	},
 
 	Components = {
