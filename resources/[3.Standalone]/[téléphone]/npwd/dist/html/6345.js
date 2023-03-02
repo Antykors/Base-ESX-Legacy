@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunknpwd_nui=self.webpackChunknpwd_nui||[]).push([[6345],{16345:function(n,u,e){e.r(u);var s=e(52322),t=e(56728);e(96927),u.default=function(){return(0,s.jsx)(t.Money,{fontSize:"small"})}}}]);
