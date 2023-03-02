@@ -189,6 +189,10 @@ Item('bodyarmor_3', function(data, slot) -- Adds 100% of body armor
 	end
 end)
 
+Item('carkey', function(data, slot)
+	TriggerEvent('carkeys:client:useKey', slot)
+end)
+
 -----------------------------------------------------------------------------------------------
 
 exports('Items', GetItem)
