@@ -17,7 +17,7 @@ local mayorOptions = {
             TriggerServerEvent("interactions:cardRequested", data.name)
         end,
         icon = 'fa-solid fa-id-card-clip',
-        label = 'request id card, 500$',
+        label = 'Editer une carte d\'identité, 500$',
         distance = 2,
         canInteract = function(entity, coords, distance)
             return ((not IsPedDeadOrDying(PlayerPedId(), true))) and (not IsPedCuffed(PlayerPedId())) 
@@ -29,7 +29,7 @@ local mayorOptions = {
             TriggerServerEvent("interactions:cardRequested", data.name)
         end,
         icon = 'fa-solid fa-address-card',
-        label = 'request weapon license, 500$',
+        label = 'Editer un permis de port d\'armes, 500$',
         distance = 2,
         canInteract = function(entity, coords, distance)
             return ((not IsPedDeadOrDying(PlayerPedId(), true))) and (not IsPedCuffed(PlayerPedId())) 
@@ -41,7 +41,7 @@ local mayorOptions = {
             TriggerServerEvent("interactions:cardRequested", data.name)
         end,
         icon = 'fa-solid fa-address-card',
-        label = 'request drivers license, 500$',
+        label = 'Editer un permis de conduire, 500$',
         distance = 2,
         canInteract = function(entity, coords, distance)
             return ((not IsPedDeadOrDying(PlayerPedId(), true))) and (not IsPedCuffed(PlayerPedId())) 
