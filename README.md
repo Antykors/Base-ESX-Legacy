@@ -16,6 +16,9 @@ Base plug & play ESX Legacy
 - Ts-adminmenu : (https://github.com/tony-stark-17/ts-adminmenu) by Tony-stark-17
 - Illenium-appearance : (https://github.com/iLLeniumStudios/illenium-appearance) by iLLenium Studios
 - East_hud : (https://github.com/eastdev/east_hud) (Modification pour que la minimap ne s'affiche qu'en voiture) by eastdev
+- NPWD : (https://github.com/project-error/npwd) by project-error 
+- Gflp10-carkeys : (https://github.com/Fellow25/gflp10-carkeys) by Fellow25 
+- Interactions : https://github.com/daiguel/interactions by daiguel
 
 Je n'ai rien inventé, cette base a été faite à base de toutes les ressources précédemment citées. Adaptées et traduites, ensemble elles forment une base facile à utiliser et rapide à mettre en place.
 
