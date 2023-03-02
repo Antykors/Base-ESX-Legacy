@@ -482,6 +482,16 @@ return {
         }
     },
 
+    ['backpack'] = {
+		label = 'Backpack',
+		weight = 220,
+		stack = false,
+		consume = 0,
+		client = {
+			export = 'wasabi_backpack.openBackpack'
+		}
+	},
+
 	-- Vigneron
 
 	['epinette'] = {
@@ -579,4 +589,106 @@ return {
 		close = true,
 		description = "Bouteille vide"
 	},
+
+    ['handcuffs'] = {
+		label = 'handcuffs',
+		weight = 500,
+		stack = false,
+		consume = 0,
+			client = {
+			anim = { dict = 'mp_prison_break', clip = 'handcuffed' },
+				usetime = 3500,
+			}
+	},
+
+	['ziptie'] = {
+		label = 'ziptie',
+		weight = 500,
+		stack = true,
+		client = {
+			anim = { dict = 'mp_prison_break', clip = 'handcuffed' },
+			usetime = 6500
+		}
+	},
+	
+	['idcard'] = {
+		label = 'id card',
+		weight = 0,
+		stack = false,
+		close = true,
+		consume = 0,
+		client = {
+			export = 'interactions.idcard'
+		},
+		buttons = {
+			{
+				label = 'VIEW ID CARD',
+				action = function (slot)
+					local idcards = exports.ox_inventory:Search('slots', 'idcard')
+					for _, v in pairs(idcards) do
+						if v.slot == slot  then 
+							TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), nil, v.metadata)
+						end
+					end
+				end
+			}
+		}
+
+	},
+
+	['drivers_license'] = {
+		label = 'driver license',
+		weight = 0,
+		stack = false,
+		close = true,
+		consume = 0,
+		client = {
+			export = 'interactions.drivers_license'
+		},
+		buttons = {
+			{
+				label = 'VIEW DRIVER LICENSE',
+				action = function (slot)
+					local idcards = exports.ox_inventory:Search('slots', 'drivers_license')
+					for _, v in pairs(idcards) do
+						if v.slot == slot  then 
+							TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), "driver", v.metadata)
+						end
+					end
+				end
+			}
+		}
+
+	},
+
+	['farmlicense'] = {
+		label = 'weapon license',
+		weight = 0,
+		stack = false,
+		close = true,
+		consume = 0,
+		client = {
+			export = 'interactions.farmlicense'
+		},
+		buttons = {
+			{
+				label = 'VIEW WEAPON LICENSE',
+				action = function (slot)
+					local idcards = exports.ox_inventory:Search('slots', 'farmlicense')
+					for _, v in pairs(idcards) do
+						if v.slot == slot  then 
+							TriggerServerEvent('jsfour-idcard:open', GetPlayerServerId(PlayerId()), "weapon", v.metadata)
+						end
+					end
+				end
+			}
+		}
+
+	},
+
+    ['carkey'] = {
+		label = 'Carkey',
+		weight = 300,
+		stack = false
+},
 }
