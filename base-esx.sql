@@ -27,13 +27,23 @@ CREATE TABLE IF NOT EXISTS `addon_account` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.addon_account : ~5 rows (environ)
+-- Listage des données de la table esx.addon_account : ~15 rows (environ)
 INSERT INTO `addon_account` (`name`, `label`, `shared`) VALUES
 	('society_ambulance', 'Ambulance', 1),
+	('society_aztecas', 'Aztecas', 1),
+	('society_ballas', 'ballas', 1),
 	('society_cardealer', 'Concessionnaire', 1),
+	('society_cartel', 'Cartel', 1),
+	('society_families', 'Families', 1),
+	('society_lost', 'Lost MC', 1),
+	('society_mafia', 'Mafia', 1),
+	('society_marabunta', 'Marabunta', 1),
 	('society_mechanic', 'Mechanic', 1),
 	('society_police', 'Police', 1),
-	('society_taxi', 'Taxi', 1);
+	('society_taxi', 'Taxi', 1),
+	('society_unicorn', 'Unicorn', 1),
+	('society_vagos', 'Vagos', 1),
+	('society_vigneron', 'Vigneron', 1);
 
 -- Listage de la structure de table esx. addon_account_data
 CREATE TABLE IF NOT EXISTS `addon_account_data` (
@@ -44,15 +54,25 @@ CREATE TABLE IF NOT EXISTS `addon_account_data` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_addon_account_data_account_name_owner` (`account_name`,`owner`),
   KEY `index_addon_account_data_account_name` (`account_name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.addon_account_data : ~5 rows (environ)
+-- Listage des données de la table esx.addon_account_data : ~16 rows (environ)
 INSERT INTO `addon_account_data` (`id`, `account_name`, `money`, `owner`) VALUES
 	(1, 'society_cardealer', 0, NULL),
 	(2, 'society_ambulance', 0, NULL),
 	(3, 'society_mechanic', 0, NULL),
 	(4, 'society_police', 0, NULL),
-	(5, 'society_taxi', 0, NULL);
+	(5, 'society_taxi', 0, NULL),
+	(6, 'society_unicorn', 0, NULL),
+	(7, 'society_ballas', 0, NULL),
+	(8, 'society_aztecas', 0, NULL),
+	(10, 'society_cartel', 0, NULL),
+	(11, 'society_families', 0, NULL),
+	(12, 'society_lost', 0, NULL),
+	(13, 'society_mafia', 0, NULL),
+	(14, 'society_marabunta', 0, NULL),
+	(15, 'society_vagos', 0, NULL),
+	(16, 'society_vigneron', 0, NULL);
 
 -- Listage de la structure de table esx. addon_inventory
 CREATE TABLE IF NOT EXISTS `addon_inventory` (
@@ -62,13 +82,23 @@ CREATE TABLE IF NOT EXISTS `addon_inventory` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.addon_inventory : ~5 rows (environ)
+-- Listage des données de la table esx.addon_inventory : ~16 rows (environ)
 INSERT INTO `addon_inventory` (`name`, `label`, `shared`) VALUES
 	('society_ambulance', 'Ambulance', 1),
+	('society_aztecas', 'Aztecas', 1),
+	('society_ballas', 'ballas', 1),
 	('society_cardealer', 'Concesionnaire', 1),
+	('society_cartel', 'Cartel', 1),
+	('society_families', 'Families', 1),
+	('society_lost', 'Lost MC', 1),
+	('society_mafia', 'Mafia', 1),
+	('society_marabunta', 'Marabunta', 1),
 	('society_mechanic', 'Mechanic', 1),
 	('society_police', 'Police', 1),
-	('society_taxi', 'Taxi', 1);
+	('society_taxi', 'Taxi', 1),
+	('society_unicorn', 'Unicorn', 1),
+	('society_vagos', 'Vagos', 1),
+	('society_vigneron', 'Vigneron', 1);
 
 -- Listage de la structure de table esx. addon_inventory_items
 CREATE TABLE IF NOT EXISTS `addon_inventory_items` (
@@ -94,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `banking` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `balance` int(11) DEFAULT 0,
   PRIMARY KEY (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table esx.banking : ~0 rows (environ)
 
@@ -130,13 +160,23 @@ CREATE TABLE IF NOT EXISTS `datastore` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.datastore : ~5 rows (environ)
+-- Listage des données de la table esx.datastore : ~16 rows (environ)
 INSERT INTO `datastore` (`name`, `label`, `shared`) VALUES
 	('property', 'Property', 1),
 	('society_ambulance', 'Ambulance', 1),
+	('society_aztecas', 'Aztecas', 1),
+	('society_ballas', 'ballas', 1),
+	('society_cartel', 'Cartel', 1),
+	('society_families', 'Families', 1),
+	('society_lost', 'Lost MC', 1),
+	('society_mafia', 'Mafia', 1),
+	('society_marabunta', 'Marabunta', 1),
 	('society_mechanic', 'Mechanic', 1),
 	('society_police', 'Police', 1),
-	('society_taxi', 'Taxi', 1);
+	('society_taxi', 'Taxi', 1),
+	('society_unicorn', 'Unicorn', 1),
+	('society_vagos', 'Vagos', 1),
+	('society_vigneron', 'Vigneron', 1);
 
 -- Listage de la structure de table esx. datastore_data
 CREATE TABLE IF NOT EXISTS `datastore_data` (
@@ -147,14 +187,24 @@ CREATE TABLE IF NOT EXISTS `datastore_data` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `index_datastore_data_name_owner` (`name`,`owner`),
   KEY `index_datastore_data_name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.datastore_data : ~4 rows (environ)
+-- Listage des données de la table esx.datastore_data : ~15 rows (environ)
 INSERT INTO `datastore_data` (`id`, `name`, `owner`, `data`) VALUES
 	(1, 'society_ambulance', NULL, '\'{}\''),
 	(2, 'society_mechanic', NULL, '\'{}\''),
 	(3, 'society_police', NULL, '\'{}\''),
-	(4, 'society_taxi', NULL, '\'{}\'');
+	(4, 'society_taxi', NULL, '\'{}\''),
+	(52, 'society_unicorn', NULL, '\'{}\''),
+	(56, 'society_ballas', NULL, '\'{}\''),
+	(58, 'society_aztecas', NULL, '\'{}\''),
+	(60, 'society_cartel', NULL, '\'{}\''),
+	(61, 'society_families', NULL, '\'{}\''),
+	(62, 'society_lost', NULL, '\'{}\''),
+	(63, 'society_mafia', NULL, '\'{}\''),
+	(64, 'society_marabunta', NULL, '\'{}\''),
+	(65, 'society_vagos', NULL, '\'{}\''),
+	(77, 'society_vigneron', NULL, '\'{}\'');
 
 -- Listage de la structure de table esx. factions
 CREATE TABLE IF NOT EXISTS `factions` (
@@ -163,9 +213,17 @@ CREATE TABLE IF NOT EXISTS `factions` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.factions : ~1 rows (environ)
+-- Listage des données de la table esx.factions : ~9 rows (environ)
 INSERT INTO `factions` (`name`, `label`) VALUES
-	('nofaction', 'Faction');
+	('aztecas', 'Aztecas'),
+	('ballas', 'Ballas'),
+	('cartel', 'Cartel'),
+	('families', 'Families'),
+	('lost', 'Lost MC'),
+	('mafia', 'Mafia'),
+	('marabunta', 'Marabunta'),
+	('nofaction', 'Faction'),
+	('vagos', 'Vagos');
 
 -- Listage de la structure de table esx. faction_grades
 CREATE TABLE IF NOT EXISTS `faction_grades` (
@@ -178,11 +236,43 @@ CREATE TABLE IF NOT EXISTS `faction_grades` (
   `skin_male` longtext DEFAULT '{}',
   `skin_female` longtext DEFAULT '{}',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.faction_grades : ~1 rows (environ)
+-- Listage des données de la table esx.faction_grades : ~33 rows (environ)
 INSERT INTO `faction_grades` (`id`, `faction_name`, `grade`, `name`, `label`, `salary`, `skin_male`, `skin_female`) VALUES
-	(1, 'nofaction', 0, 'nofaction', 'Sans faction', 0, '{}', '{}');
+	(1, 'nofaction', 0, 'nofaction', 'Sans faction', 0, '{}', '{}'),
+	(4, 'ballas', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(5, 'ballas', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(6, 'ballas', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(7, 'ballas', 3, 'boss', 'Chef du Gang', 0, '{}', '{}'),
+	(8, 'families', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(9, 'families', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(10, 'families', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(11, 'families', 3, 'boss', 'Chef du Gang', 0, '{}', '{}'),
+	(12, 'vagos', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(13, 'vagos', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(14, 'vagos', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(15, 'vagos', 3, 'boss', 'Chef du Gang', 0, '{}', '{}'),
+	(16, 'lost', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(17, 'lost', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(18, 'lost', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(19, 'lost', 3, 'boss', 'Chef du Gang', 0, '{}', '{}'),
+	(20, 'aztecas', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(21, 'aztecas', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(22, 'aztecas', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(23, 'aztecas', 3, 'boss', 'Chef du Gang', 0, '{}', '{}'),
+	(24, 'marabunta', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(25, 'marabunta', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(26, 'marabunta', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(27, 'marabunta', 3, 'boss', 'Chef du Gang', 0, '{}', '{}'),
+	(28, 'mafia', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(29, 'mafia', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(30, 'mafia', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(31, 'mafia', 3, 'boss', 'Chef du Gang', 0, '{}', '{}'),
+	(32, 'cartel', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(33, 'cartel', 1, 'gangster', 'Gangster', 0, '{}', '{}'),
+	(34, 'cartel', 2, 'bandit', 'Bandit', 0, '{}', '{}'),
+	(35, 'cartel', 3, 'boss', 'Chef du Gang', 0, '{}', '{}');
 
 -- Listage de la structure de table esx. fine_types
 CREATE TABLE IF NOT EXISTS `fine_types` (
@@ -267,14 +357,16 @@ CREATE TABLE IF NOT EXISTS `jobs` (
   PRIMARY KEY (`name`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.jobs : ~6 rows (environ)
+-- Listage des données de la table esx.jobs : ~9 rows (environ)
 INSERT INTO `jobs` (`name`, `label`) VALUES
 	('ambulance', 'Ambulance'),
 	('cardealer', 'Concessionnaire'),
 	('mechanic', 'Mechanic'),
 	('police', 'LSPD'),
 	('taxi', 'Taxi'),
-	('unemployed', 'Unemployed');
+	('unemployed', 'Unemployed'),
+	('unicorn', 'Unicorn'),
+	('vigneron', 'Vigneron');
 
 -- Listage de la structure de table esx. job_grades
 CREATE TABLE IF NOT EXISTS `job_grades` (
@@ -287,34 +379,42 @@ CREATE TABLE IF NOT EXISTS `job_grades` (
   `skin_male` longtext NOT NULL,
   `skin_female` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=40 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.job_grades : ~24 rows (environ)
+-- Listage des données de la table esx.job_grades : ~35 rows (environ)
 INSERT INTO `job_grades` (`id`, `job_name`, `grade`, `name`, `label`, `salary`, `skin_male`, `skin_female`) VALUES
-	(1, 'unemployed', 0, 'unemployed', 'Unemployed', 200, '{}', '{}'),
-	(2, 'cardealer', 0, 'recruit', 'Recrue', 10, '{}', '{}'),
-	(3, 'cardealer', 1, 'novice', 'Novice', 25, '{}', '{}'),
-	(4, 'cardealer', 2, 'experienced', 'Experimente', 40, '{}', '{}'),
+	(1, 'unemployed', 0, 'unemployed', 'Unemployed', 0, '{}', '{}'),
+	(2, 'cardealer', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(3, 'cardealer', 1, 'novice', 'Novice', 0, '{}', '{}'),
+	(4, 'cardealer', 2, 'experienced', 'Experimente', 0, '{}', '{}'),
 	(5, 'cardealer', 3, 'boss', 'Patron', 0, '{}', '{}'),
-	(6, 'ambulance', 0, 'ambulance', 'Ambulancier', 20, '{"tshirt_2":0,"hair_color_1":5,"glasses_2":3,"shoes":9,"torso_2":3,"hair_color_2":0,"pants_1":24,"glasses_1":4,"hair_1":2,"sex":0,"decals_2":0,"tshirt_1":15,"helmet_1":8,"helmet_2":0,"arms":92,"face":19,"decals_1":60,"torso_1":13,"hair_2":0,"skin":34,"pants_2":5}', '{"tshirt_2":3,"decals_2":0,"glasses":0,"hair_1":2,"torso_1":73,"shoes":1,"hair_color_2":0,"glasses_1":19,"skin":13,"face":6,"pants_2":5,"tshirt_1":75,"pants_1":37,"helmet_1":57,"torso_2":0,"arms":14,"sex":1,"glasses_2":0,"decals_1":0,"hair_2":0,"helmet_2":0,"hair_color_1":0}'),
-	(7, 'ambulance', 1, 'doctor', 'Medecin', 40, '{"tshirt_2":0,"hair_color_1":5,"glasses_2":3,"shoes":9,"torso_2":3,"hair_color_2":0,"pants_1":24,"glasses_1":4,"hair_1":2,"sex":0,"decals_2":0,"tshirt_1":15,"helmet_1":8,"helmet_2":0,"arms":92,"face":19,"decals_1":60,"torso_1":13,"hair_2":0,"skin":34,"pants_2":5}', '{"tshirt_2":3,"decals_2":0,"glasses":0,"hair_1":2,"torso_1":73,"shoes":1,"hair_color_2":0,"glasses_1":19,"skin":13,"face":6,"pants_2":5,"tshirt_1":75,"pants_1":37,"helmet_1":57,"torso_2":0,"arms":14,"sex":1,"glasses_2":0,"decals_1":0,"hair_2":0,"helmet_2":0,"hair_color_1":0}'),
-	(8, 'ambulance', 2, 'chief_doctor', 'Medecin-chef', 60, '{"tshirt_2":0,"hair_color_1":5,"glasses_2":3,"shoes":9,"torso_2":3,"hair_color_2":0,"pants_1":24,"glasses_1":4,"hair_1":2,"sex":0,"decals_2":0,"tshirt_1":15,"helmet_1":8,"helmet_2":0,"arms":92,"face":19,"decals_1":60,"torso_1":13,"hair_2":0,"skin":34,"pants_2":5}', '{"tshirt_2":3,"decals_2":0,"glasses":0,"hair_1":2,"torso_1":73,"shoes":1,"hair_color_2":0,"glasses_1":19,"skin":13,"face":6,"pants_2":5,"tshirt_1":75,"pants_1":37,"helmet_1":57,"torso_2":0,"arms":14,"sex":1,"glasses_2":0,"decals_1":0,"hair_2":0,"helmet_2":0,"hair_color_1":0}'),
-	(9, 'ambulance', 3, 'boss', 'Chirurgien', 80, '{"tshirt_2":0,"hair_color_1":5,"glasses_2":3,"shoes":9,"torso_2":3,"hair_color_2":0,"pants_1":24,"glasses_1":4,"hair_1":2,"sex":0,"decals_2":0,"tshirt_1":15,"helmet_1":8,"helmet_2":0,"arms":92,"face":19,"decals_1":60,"torso_1":13,"hair_2":0,"skin":34,"pants_2":5}', '{"tshirt_2":3,"decals_2":0,"glasses":0,"hair_1":2,"torso_1":73,"shoes":1,"hair_color_2":0,"glasses_1":19,"skin":13,"face":6,"pants_2":5,"tshirt_1":75,"pants_1":37,"helmet_1":57,"torso_2":0,"arms":14,"sex":1,"glasses_2":0,"decals_1":0,"hair_2":0,"helmet_2":0,"hair_color_1":0}'),
-	(10, 'mechanic', 0, 'recrue', 'Recrue', 12, '{}', '{}'),
-	(11, 'mechanic', 1, 'novice', 'Novice', 24, '{}', '{}'),
-	(12, 'mechanic', 2, 'experimente', 'Experimente', 36, '{}', '{}'),
-	(13, 'mechanic', 3, 'chief', 'Chef d\'équipe', 48, '{}', '{}'),
+	(6, 'ambulance', 0, 'ambulance', 'Ambulancier', 0, '{}', '{}'),
+	(7, 'ambulance', 1, 'doctor', 'Medecin', 0, '{}', '{}'),
+	(8, 'ambulance', 2, 'chief_doctor', 'Medecin-chef', 0, '{}', '{}'),
+	(9, 'ambulance', 3, 'boss', 'Chirurgien', 0, '{}', '{}'),
+	(10, 'mechanic', 0, 'recrue', 'Recrue', 0, '{}', '{}'),
+	(11, 'mechanic', 1, 'novice', 'Novice', 0, '{}', '{}'),
+	(12, 'mechanic', 2, 'experimente', 'Experimente', 0, '{}', '{}'),
+	(13, 'mechanic', 3, 'chief', 'Chef d\'équipe', 0, '{}', '{}'),
 	(14, 'mechanic', 4, 'boss', 'Patron', 0, '{}', '{}'),
-	(15, 'police', 0, 'recruit', 'Recrue', 20, '{}', '{}'),
-	(16, 'police', 1, 'officer', 'Officier', 40, '{}', '{}'),
-	(17, 'police', 2, 'sergeant', 'Sergent', 60, '{}', '{}'),
-	(18, 'police', 3, 'lieutenant', 'Lieutenant', 85, '{}', '{}'),
-	(19, 'police', 4, 'boss', 'Commandant', 100, '{}', '{}'),
-	(20, 'taxi', 0, 'recrue', 'Recrue', 12, '{"hair_2":0,"hair_color_2":0,"torso_1":32,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":31,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":0,"age_2":0,"glasses_2":0,"ears_2":0,"arms":27,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":0,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":0,"bproof_1":0,"mask_1":0,"decals_1":1,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":10,"pants_1":24}', '{"hair_2":0,"hair_color_2":0,"torso_1":57,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":38,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":1,"age_2":0,"glasses_2":0,"ears_2":0,"arms":21,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":1,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":5,"bproof_1":0,"mask_1":0,"decals_1":1,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":49,"pants_1":11}'),
-	(21, 'taxi', 1, 'novice', 'Novice', 24, '{"hair_2":0,"hair_color_2":0,"torso_1":32,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":31,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":0,"age_2":0,"glasses_2":0,"ears_2":0,"arms":27,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":0,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":0,"bproof_1":0,"mask_1":0,"decals_1":1,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":10,"pants_1":24}', '{"hair_2":0,"hair_color_2":0,"torso_1":57,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":38,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":1,"age_2":0,"glasses_2":0,"ears_2":0,"arms":21,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":1,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":5,"bproof_1":0,"mask_1":0,"decals_1":1,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":49,"pants_1":11}'),
-	(22, 'taxi', 2, 'experimente', 'Experimente', 36, '{"hair_2":0,"hair_color_2":0,"torso_1":26,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":57,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":4,"age_2":0,"glasses_2":0,"ears_2":0,"arms":11,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":0,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":0,"bproof_1":0,"mask_1":0,"decals_1":0,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":10,"pants_1":24}', '{"hair_2":0,"hair_color_2":0,"torso_1":57,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":38,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":1,"age_2":0,"glasses_2":0,"ears_2":0,"arms":21,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":1,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":5,"bproof_1":0,"mask_1":0,"decals_1":1,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":49,"pants_1":11}'),
-	(23, 'taxi', 3, 'uber', 'Uber', 48, '{"hair_2":0,"hair_color_2":0,"torso_1":26,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":57,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":4,"age_2":0,"glasses_2":0,"ears_2":0,"arms":11,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":0,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":0,"bproof_1":0,"mask_1":0,"decals_1":0,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":10,"pants_1":24}', '{"hair_2":0,"hair_color_2":0,"torso_1":57,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":38,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":1,"age_2":0,"glasses_2":0,"ears_2":0,"arms":21,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":1,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":5,"bproof_1":0,"mask_1":0,"decals_1":1,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":49,"pants_1":11}'),
-	(24, 'taxi', 4, 'boss', 'Patron', 0, '{"hair_2":0,"hair_color_2":0,"torso_1":29,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":31,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":4,"age_2":0,"glasses_2":0,"ears_2":0,"arms":1,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":0,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":0,"bproof_1":0,"mask_1":0,"decals_1":0,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":4,"eyebrows_1":0,"face":0,"shoes_1":10,"pants_1":24}', '{"hair_2":0,"hair_color_2":0,"torso_1":57,"bags_1":0,"helmet_2":0,"chain_2":0,"eyebrows_3":0,"makeup_3":0,"makeup_2":0,"tshirt_1":38,"makeup_1":0,"bags_2":0,"makeup_4":0,"eyebrows_4":0,"chain_1":0,"lipstick_4":0,"bproof_2":0,"hair_color_1":0,"decals_2":0,"pants_2":1,"age_2":0,"glasses_2":0,"ears_2":0,"arms":21,"lipstick_1":0,"ears_1":-1,"mask_2":0,"sex":1,"lipstick_3":0,"helmet_1":-1,"shoes_2":0,"beard_2":0,"beard_1":0,"lipstick_2":0,"beard_4":0,"glasses_1":5,"bproof_1":0,"mask_1":0,"decals_1":1,"hair_1":0,"eyebrows_2":0,"beard_3":0,"age_1":0,"tshirt_2":0,"skin":0,"torso_2":0,"eyebrows_1":0,"face":0,"shoes_1":49,"pants_1":11}');
+	(15, 'police', 0, 'recruit', 'Recrue', 0, '{}', '{}'),
+	(16, 'police', 1, 'officer', 'Officier', 0, '{}', '{}'),
+	(17, 'police', 2, 'sergeant', 'Sergent', 0, '{}', '{}'),
+	(18, 'police', 3, 'lieutenant', 'Lieutenant', 0, '{}', '{}'),
+	(19, 'police', 4, 'boss', 'Commandant', 0, '{}', '{}'),
+	(20, 'taxi', 0, 'recrue', 'Recrue', 0, '{}', '{}'),
+	(21, 'taxi', 1, 'novice', 'Novice', 0, '{}', '{}'),
+	(22, 'taxi', 2, 'experimente', 'Experimente', 0, '{}', '{}'),
+	(23, 'taxi', 3, 'uber', 'Uber', 0, '{}', '{}'),
+	(24, 'taxi', 4, 'boss', 'Patron', 0, '{}', '{}'),
+	(25, 'unicorn', 0, 'barman', 'Barman', 0, '{}', '{}'),
+	(26, 'unicorn', 1, 'dancer', 'Danseur', 0, '{}', '{}'),
+	(27, 'unicorn', 2, 'viceboss', 'Co-gérant', 0, '{}', '{}'),
+	(28, 'unicorn', 3, 'boss', 'Gérant', 0, '{}', '{}'),
+	(33, 'vigneron', 0, 'recrue', 'Intérimaire', 0, '{}', '{}'),
+	(34, 'vigneron', 1, 'novice', 'Vigneron', 0, '{}', '{}'),
+	(35, 'vigneron', 2, 'cdisenior', 'Chef de chai', 0, '{}', '{}'),
+	(36, 'vigneron', 3, 'boss', 'Gérant', 0, '{}', '{}');
 
 -- Listage de la structure de table esx. licenses
 CREATE TABLE IF NOT EXISTS `licenses` (
@@ -348,6 +448,258 @@ CREATE TABLE IF NOT EXISTS `management_outfits` (
 
 -- Listage des données de la table esx.management_outfits : ~0 rows (environ)
 
+-- Listage de la structure de table esx. npwd_calls
+CREATE TABLE IF NOT EXISTS `npwd_calls` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `transmitter` varchar(255) NOT NULL,
+  `receiver` varchar(255) NOT NULL,
+  `is_accepted` tinyint(4) DEFAULT 0,
+  `start` varchar(255) DEFAULT NULL,
+  `end` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `identifier` (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_calls : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_darkchat_channels
+CREATE TABLE IF NOT EXISTS `npwd_darkchat_channels` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `channel_identifier` varchar(255) NOT NULL,
+  `label` varchar(255) DEFAULT '',
+  PRIMARY KEY (`id`) USING BTREE,
+  UNIQUE KEY `darkchat_channels_channel_identifier_uindex` (`channel_identifier`) USING BTREE
+) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Listage des données de la table esx.npwd_darkchat_channels : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_darkchat_channel_members
+CREATE TABLE IF NOT EXISTS `npwd_darkchat_channel_members` (
+  `channel_id` int(11) NOT NULL,
+  `user_identifier` varchar(255) NOT NULL,
+  `is_owner` tinyint(4) NOT NULL DEFAULT 0,
+  KEY `npwd_darkchat_channel_members_npwd_darkchat_channels_id_fk` (`channel_id`) USING BTREE,
+  CONSTRAINT `npwd_darkchat_channel_members_npwd_darkchat_channels_id_fk` FOREIGN KEY (`channel_id`) REFERENCES `npwd_darkchat_channels` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Listage des données de la table esx.npwd_darkchat_channel_members : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_darkchat_messages
+CREATE TABLE IF NOT EXISTS `npwd_darkchat_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `channel_id` int(11) NOT NULL,
+  `message` varchar(255) NOT NULL,
+  `user_identifier` varchar(255) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `is_image` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `darkchat_messages_darkchat_channels_id_fk` (`channel_id`) USING BTREE,
+  CONSTRAINT `darkchat_messages_darkchat_channels_id_fk` FOREIGN KEY (`channel_id`) REFERENCES `npwd_darkchat_channels` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- Listage des données de la table esx.npwd_darkchat_messages : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_marketplace_listings
+CREATE TABLE IF NOT EXISTS `npwd_marketplace_listings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `username` varchar(255) DEFAULT NULL,
+  `name` varchar(50) DEFAULT NULL,
+  `number` varchar(255) NOT NULL,
+  `title` varchar(255) DEFAULT NULL,
+  `url` varchar(255) DEFAULT NULL,
+  `description` varchar(255) NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `reported` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`),
+  KEY `identifier` (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_marketplace_listings : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_match_profiles
+CREATE TABLE IF NOT EXISTS `npwd_match_profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `name` varchar(90) NOT NULL,
+  `image` varchar(255) NOT NULL,
+  `bio` varchar(512) DEFAULT NULL,
+  `location` varchar(45) DEFAULT NULL,
+  `job` varchar(45) DEFAULT NULL,
+  `tags` varchar(255) NOT NULL DEFAULT '',
+  `voiceMessage` varchar(512) DEFAULT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `identifier_UNIQUE` (`identifier`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_match_profiles : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_match_views
+CREATE TABLE IF NOT EXISTS `npwd_match_views` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `profile` int(11) NOT NULL,
+  `liked` tinyint(4) DEFAULT 0,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  KEY `match_profile_idx` (`profile`),
+  KEY `identifier` (`identifier`),
+  CONSTRAINT `match_profile` FOREIGN KEY (`profile`) REFERENCES `npwd_match_profiles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_match_views : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_messages
+CREATE TABLE IF NOT EXISTS `npwd_messages` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` varchar(512) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `user_identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `conversation_id` varchar(512) NOT NULL,
+  `isRead` tinyint(4) NOT NULL DEFAULT 0,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `visible` tinyint(4) NOT NULL DEFAULT 1,
+  `author` varchar(255) NOT NULL,
+  `is_embed` tinyint(4) NOT NULL DEFAULT 0,
+  `embed` varchar(512) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `user_identifier` (`user_identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_messages : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_messages_conversations
+CREATE TABLE IF NOT EXISTS `npwd_messages_conversations` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `conversation_list` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `label` varchar(60) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `last_message_id` int(11) DEFAULT NULL,
+  `is_group_chat` tinyint(4) NOT NULL DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_messages_conversations : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_messages_participants
+CREATE TABLE IF NOT EXISTS `npwd_messages_participants` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `conversation_id` int(11) NOT NULL,
+  `participant` varchar(225) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `unread_count` int(11) DEFAULT 0,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `message_participants_npwd_messages_conversations_id_fk` (`conversation_id`) USING BTREE,
+  CONSTRAINT `message_participants_npwd_messages_conversations_id_fk` FOREIGN KEY (`conversation_id`) REFERENCES `npwd_messages_conversations` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_messages_participants : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_notes
+CREATE TABLE IF NOT EXISTS `npwd_notes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `title` varchar(255) NOT NULL,
+  `content` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `identifier` (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_notes : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_phone_contacts
+CREATE TABLE IF NOT EXISTS `npwd_phone_contacts` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `avatar` varchar(255) DEFAULT NULL,
+  `number` varchar(20) DEFAULT NULL,
+  `display` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  KEY `identifier` (`identifier`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_phone_contacts : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_phone_gallery
+CREATE TABLE IF NOT EXISTS `npwd_phone_gallery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `image` varchar(255) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `identifier` (`identifier`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_phone_gallery : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_twitter_likes
+CREATE TABLE IF NOT EXISTS `npwd_twitter_likes` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) NOT NULL,
+  `tweet_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_combination` (`profile_id`,`tweet_id`),
+  KEY `profile_idx` (`profile_id`),
+  KEY `tweet_idx` (`tweet_id`),
+  CONSTRAINT `profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
+  CONSTRAINT `tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_twitter_likes : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_twitter_profiles
+CREATE TABLE IF NOT EXISTS `npwd_twitter_profiles` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_name` varchar(90) NOT NULL,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `avatar_url` varchar(255) DEFAULT 'https://i.file.glass/QrEvq.png',
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `profile_name_UNIQUE` (`profile_name`),
+  KEY `identifier` (`identifier`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_twitter_profiles : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_twitter_reports
+CREATE TABLE IF NOT EXISTS `npwd_twitter_reports` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `profile_id` int(11) NOT NULL,
+  `tweet_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `unique_combination` (`profile_id`,`tweet_id`),
+  KEY `profile_idx` (`profile_id`),
+  KEY `tweet_idx` (`tweet_id`),
+  CONSTRAINT `report_profile` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`),
+  CONSTRAINT `report_tweet` FOREIGN KEY (`tweet_id`) REFERENCES `npwd_twitter_tweets` (`id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_twitter_reports : ~0 rows (environ)
+
+-- Listage de la structure de table esx. npwd_twitter_tweets
+CREATE TABLE IF NOT EXISTS `npwd_twitter_tweets` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `message` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `createdAt` timestamp NOT NULL DEFAULT current_timestamp(),
+  `updatedAt` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `likes` int(11) NOT NULL DEFAULT 0,
+  `identifier` varchar(48) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
+  `visible` tinyint(4) NOT NULL DEFAULT 1,
+  `images` varchar(1000) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT '',
+  `retweet` int(11) DEFAULT NULL,
+  `profile_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE,
+  KEY `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` (`profile_id`) USING BTREE,
+  CONSTRAINT `npwd_twitter_tweets_npwd_twitter_profiles_id_fk` FOREIGN KEY (`profile_id`) REFERENCES `npwd_twitter_profiles` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Listage des données de la table esx.npwd_twitter_tweets : ~0 rows (environ)
+
 -- Listage de la structure de table esx. owned_vehicles
 CREATE TABLE IF NOT EXISTS `owned_vehicles` (
   `owner` varchar(46) DEFAULT NULL,
@@ -372,9 +724,11 @@ CREATE TABLE IF NOT EXISTS `ox_doorlock` (
   `name` varchar(50) NOT NULL,
   `data` longtext NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
--- Listage des données de la table esx.ox_doorlock : ~0 rows (environ)
+-- Listage des données de la table esx.ox_doorlock : ~1 rows (environ)
+INSERT INTO `ox_doorlock` (`id`, `name`, `data`) VALUES
+	(3, 'Lost Entrée', '{"model":190770132,"heading":43,"coords":{"x":981.1505126953125,"y":-103.2552490234375,"z":74.99357604980469},"state":1,"doors":false,"groups":{"lost":0},"maxDistance":2,"lockpick":true}');
 
 -- Listage de la structure de table esx. ox_inventory
 CREATE TABLE IF NOT EXISTS `ox_inventory` (
@@ -412,7 +766,7 @@ CREATE TABLE IF NOT EXISTS `player_outfits` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `citizenid_outfitname_model` (`citizenid`,`outfitname`,`model`),
   KEY `citizenid` (`citizenid`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=29 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table esx.player_outfits : ~0 rows (environ)
 
@@ -424,7 +778,7 @@ CREATE TABLE IF NOT EXISTS `player_outfit_codes` (
   PRIMARY KEY (`id`),
   KEY `FK_player_outfit_codes_player_outfits` (`outfitid`),
   CONSTRAINT `FK_player_outfit_codes_player_outfits` FOREIGN KEY (`outfitid`) REFERENCES `player_outfits` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- Listage des données de la table esx.player_outfit_codes : ~0 rows (environ)
 
@@ -476,6 +830,7 @@ CREATE TABLE IF NOT EXISTS `users` (
   `last_property` longtext DEFAULT NULL,
   `tattoos` longtext NOT NULL DEFAULT '[]',
   `disabled` tinyint(1) DEFAULT 0,
+  `phone_number` varchar(20) DEFAULT NULL,
   PRIMARY KEY (`identifier`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -487,7 +842,7 @@ CREATE TABLE IF NOT EXISTS `user_licenses` (
   `type` varchar(60) NOT NULL,
   `owner` varchar(46) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- Listage des données de la table esx.user_licenses : ~0 rows (environ)
 
