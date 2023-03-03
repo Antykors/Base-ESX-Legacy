@@ -11,15 +11,15 @@ CreateThread(function()
         Wait(0)
 		local ped = PlayerPedId()
 		local vehicle = GetVehiclePedIsIn(ped, false)
-		local engineStatus
+		--local engineStatus
 		
-		if IsPedGettingIntoAVehicle(ped) then
-			engineStatus = (GetIsVehicleEngineRunning(vehicle))
-			if not (engineStatus) then 
-				SetVehicleEngineOn(vehicle, false, true, true)
-				DisableControlAction(2, 71, true)
-			end
-		end
+		--if IsPedGettingIntoAVehicle(ped) then
+			--engineStatus = (GetIsVehicleEngineRunning(vehicle))
+			--if not (engineStatus) then 
+				--SetVehicleEngineOn(vehicle, false, true, true)
+				--DisableControlAction(2, 71, true)
+			--end
+		--end
 		
 		if IsPedInAnyVehicle(ped, false) and not IsEntityDead(ped) and (not GetIsVehicleEngineRunning(vehicle)) then
 			DisableControlAction(2, 71, true)
