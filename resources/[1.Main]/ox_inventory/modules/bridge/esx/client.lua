@@ -9,11 +9,13 @@ local ESX = setmetatable({}, {
 	end
 })
 
+---@diagnostic disable-next-line: duplicate-set-field
 function client.setPlayerData(key, value)
 	PlayerData[key] = value
 	ESX.SetPlayerData(key, value)
 end
 
+---@diagnostic disable-next-line: duplicate-set-field
 function client.setPlayerStatus(values)
 	for name, value in pairs(values) do
 		if value > 0 then TriggerEvent('esx_status:add', name, value) else TriggerEvent('esx_status:remove', name, -value) end
@@ -23,18 +25,18 @@ end
 RegisterNetEvent('esx:onPlayerLogout', onLogout)
 
 AddEventHandler('esx:setPlayerData', function(key, value)
-    if not PlayerData.loaded or GetInvokingResource() ~= 'es_extended' then return end
+	if not PlayerData.loaded or GetInvokingResource() ~= 'es_extended' then return end
 
-    if key == 'job' then
+	if key == 'job' then
+		key = 'groups'
+		value = { [value.name] = value.grade }
+	elseif key == 'faction' then
         key = 'groups'
         value = { [value.name] = value.grade }
-    elseif key == 'faction' then
-        key = 'groups'
-        value = { [value.name] = value.grade }
-    end
+	end
 
-    PlayerData[key] = value
-    OnPlayerData(key, value)
+	PlayerData[key] = value
+	OnPlayerData(key, value)
 end)
 
 RegisterNetEvent('esx_policejob:handcuff', function()

@@ -1,6 +1,34 @@
 if not lib then return end
 
 local Inventory = {}
+
+---@class OxInventory
+---@field id any trust me it's less annoying this way
+---@field dbId string|number
+---@field label string
+---@field type string
+---@field slots number
+---@field weight number
+---@field maxWeight number
+---@field open number|boolean
+---@field items table<number, OxServerItem?>
+---@field set function
+---@field get function
+---@field minimal function
+---@field time number
+---@field owner? string|number|boolean
+---@field groups? table<string, number>
+---@field coords? vector3
+---@field datastore? boolean
+---@field changed? boolean
+---@field weapon? number
+---@field containerSlot? number
+---@field player? { source: number, ped: number, groups: table, name?: string, sex?: string, dateofbirth?: string }
+---@field netid? number
+
+---@alias inventory OxInventory | table | string | number
+
+---@type table<any, OxInventory>
 local Inventories = {}
 local Vehicles = data 'vehicles'
 local RegisteredStashes = {}
@@ -11,7 +39,7 @@ for _, stash in pairs(data 'stashes') do
 		label = stash.label,
 		owner = stash.owner,
 		slots = stash.slots,
-		weight = stash.weight,
+		maxWeight = stash.weight,
 		groups = stash.groups or stash.jobs,
 		coords = shared.target and stash.target?.loc or stash.coords
 	}
@@ -19,6 +47,10 @@ end
 
 local GetVehicleNumberPlateText = GetVehicleNumberPlateText
 
+---Atempts to lazily load inventory data from the database or create a new player-owned instance for "personal" stashes
+---@param data table
+---@param player table
+---@return OxInventory | false | nil
 local function loadInventoryData(data, player)
 	local source = source
 	local inventory
@@ -116,7 +148,7 @@ local function loadInventoryData(data, player)
 			inventory = Inventories[owner and ('%s:%s'):format(stash.name, owner) or stash.name]
 
 			if not inventory then
-				inventory = Inventory.Create(stash.name, stash.label or stash.name, 'stash', stash.slots, 0, stash.weight, owner, nil, stash.groups)
+				inventory = Inventory.Create(stash.name, stash.label or stash.name, 'stash', stash.slots, 0, stash.maxWeight, owner, nil, stash.groups)
 			end
 		end
 	end
@@ -129,6 +161,7 @@ local function loadInventoryData(data, player)
 end
 
 setmetatable(Inventory, {
+	---@return OxInventory|false|nil
 	__call = function(self, inv, player)
 		if not inv then
 			return self
@@ -140,11 +173,12 @@ setmetatable(Inventory, {
 	end
 })
 
----@param inv string | number | table
+---@param inv inventory
 ---@param owner? string | number
 ---@return table?
 local function getInventory(inv, owner)
 	if not inv then return Inventory end
+
 	local type = type(inv)
 
 	if type == 'table' or type == 'number' then
@@ -157,18 +191,19 @@ end
 exports('Inventory', getInventory)
 exports('GetInventory', getInventory)
 
----@param inv string | number | table
+---@param inv inventory
 ---@param owner? string | number
 ---@return table?
 exports('GetInventoryItems', function(inv, owner)
 	return getInventory(inv, owner)?.items
 end)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param k string
 ---@param v any
 function Inventory.Set(inv, k, v)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
+
 	if inv then
 		if type(v) == 'number' then math.floor(v + 0.5) end
 
@@ -194,19 +229,19 @@ function Inventory.Set(inv, k, v)
 	end
 end
 
----@param inv table | string | number
+---@param inv inventory
 ---@param key string
 function Inventory.Get(inv, key)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
 	if inv then
 		return inv[key]
 	end
 end
 
----@param inv table | string | number
+---@param inv inventory
 ---@return table items table containing minimal inventory data
 local function minimal(inv)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
 	local inventory, count = {}, 0
 	for k, v in pairs(inv.items) do
 		if v.name and v.count > 0 then
@@ -222,13 +257,16 @@ local function minimal(inv)
 	return inventory
 end
 
----@param inv table | string | number
+---@param inv inventory
 ---@param item table
 ---@param count number
 ---@param metadata any
 ---@param slot any
 function Inventory.SetSlot(inv, item, count, metadata, slot)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+	if not inv then return end
+
 	local currentSlot = inv.items[slot]
 	local newCount = currentSlot and currentSlot.count + count or count
 	local newWeight = currentSlot and inv.weight - currentSlot.weight or inv.weight
@@ -258,7 +296,10 @@ CreateThread(function()
 	-- Require "set inventory:weaponmismatch 1" to enable experimental weapon checks.
 	-- Maybe need some tweaks, and will definitely need more hashes added to the ignore list.
 	-- May even use weaponDamageEvent, depending on performance..
-	if GetConvarInt('inventory:weaponmismatch', 0) == 0 then return end
+	-- if GetConvarInt('inventory:weaponmismatch', 0) == 0 then return end
+
+	-- Disable this loop, client-side handling should be "good enough".
+	do return end
 
 	local ignore = {
 		[0] = 1, -- GetSelectedPedWeapon returns 0 when using a firetruk; likely some other cases
@@ -352,6 +393,7 @@ local activeIdentifiers = {}
 ---@param maxWeight number
 ---@param owner string | number | boolean
 ---@param items? table
+---@return OxInventory
 --- This should only be utilised internally!
 --- To create a stash, please use `exports.ox_inventory:RegisterStash` instead.
 function Inventory.Create(id, label, invType, slots, weight, maxWeight, owner, items, groups)
@@ -380,7 +422,7 @@ function Inventory.Create(id, label, invType, slots, weight, maxWeight, owner, i
 		groups = groups,
 	}
 
-	if invType == 'drop' then
+	if invType == 'drop' or invType == 'temp' then
 		self.datastore = true
 	else
 		self.changed = false
@@ -411,9 +453,9 @@ function Inventory.Create(id, label, invType, slots, weight, maxWeight, owner, i
 	return Inventories[self.id]
 end
 
----@param inv table | string | number
+---@param inv inventory
 function Inventory.Remove(inv)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
 
 	if inv then
 		if inv.type == 'drop' then
@@ -470,7 +512,7 @@ end
 exports('UpdateVehicle', Inventory.UpdateVehicle)
 
 function Inventory.Save(inv)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
 
 	if inv then
 		local items = json.encode(minimal(inv))
@@ -520,7 +562,7 @@ local function randomLoot(loot)
 	return items
 end
 
----@param inv table | string | number
+---@param inv inventory
 ---@param invType string
 ---@param items? table
 ---@return table returnData, number totalWeight, boolean true
@@ -607,7 +649,7 @@ end
 
 local table = lib.table
 
----@param inv table | string | number
+---@param inv inventory
 ---@param item table | string
 ---@param metadata? any
 ---@param returnsCount? boolean
@@ -617,7 +659,7 @@ function Inventory.GetItem(inv, item, metadata, returnsCount)
 
 	if item then
 		item = returnsCount and item or table.clone(item)
-		inv = Inventory(inv)
+		inv = Inventory(inv) --[[@as OxInventory]]
 		local count = 0
 
 		if inv then
@@ -669,14 +711,14 @@ function Inventory.ContainerWeight(container, metaWeight, playerInventory)
 	playerInventory.weight += container.weight
 end
 
----@param inv table | string | number
+---@param inv inventory
 ---@param item table | string
 ---@param count number
 ---@param metadata? table
 function Inventory.SetItem(inv, item, count, metadata)
 	if type(item) ~= 'table' then item = Items(item) end
 	if item and count >= 0 then
-		inv = Inventory(inv)
+		inv = Inventory(inv) --[[@as OxInventory]]
 		if inv then
 			local itemCount = Inventory.GetItem(inv, item.name, metadata, true) --[[@as number]]
 
@@ -692,9 +734,9 @@ function Inventory.SetItem(inv, item, count, metadata)
 end
 exports('SetItem', Inventory.SetItem)
 
----@param inv table | string | number
+---@param inv inventory
 function Inventory.GetCurrentWeapon(inv)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
 
 	if inv?.player then
 		local weapon = inv.items[inv.weapon]
@@ -708,80 +750,104 @@ function Inventory.GetCurrentWeapon(inv)
 end
 exports('GetCurrentWeapon', Inventory.GetCurrentWeapon)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param slot number
 ---@return table? item
 function Inventory.GetSlot(inv, slot)
-	inv = Inventory(inv)
-	slot = inv and inv.items[slot]
+	inv = Inventory(inv) --[[@as OxInventory]]
+	local slotData = inv and inv.items[slot]
 
-	if inv and slot then
-		local durability = slot.metadata.durability
+	if slotData then
+		local durability = slotData.metadata.durability
 
 		if durability and durability > 100 and os.time() >= durability then
-			slot.metadata.durability = 0
+			slotData.metadata.durability = 0
 		end
 
-		return slot
+		return slotData
 	end
 end
 exports('GetSlot', Inventory.GetSlot)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param slot number
 function Inventory.SetDurability(inv, slot, durability)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
+	local slotData = inv and inv.items[slot]
 
-	if inv then
-		slot = inv.items[slot]
+	if inv and slotData then
+		slotData.metadata.durability = durability
 
-		if slot then
-			slot.metadata.durability = durability
-
-			if inv.player then
-				if server.syncInventory then server.syncInventory(inv) end
-				TriggerClientEvent('ox_inventory:updateSlots', inv.id, {{item = slot, inventory = inv.type}}, {left=inv.weight, right=inv.open and Inventories[inv.open]?.weight})
-			end
+		if inv.player then
+			if server.syncInventory then server.syncInventory(inv) end
+			TriggerClientEvent('ox_inventory:updateSlots', inv.id, {{item = slotData, inventory = inv.type}}, {left=inv.weight, right=inv.open and Inventories[inv.open]?.weight})
 		end
 	end
 end
 exports('SetDurability', Inventory.SetDurability)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param slot number | false
 ---@param metadata table
 function Inventory.SetMetadata(inv, slot, metadata)
-	inv = Inventory(inv)
-	slot = type(slot) == 'number' and (inv and inv.items[slot])
+	inv = Inventory(inv) --[[@as OxInventory]]
+	local slotData = inv and type(slot) == 'number' and inv.items[slot]
 
-	if inv and slot then
-		local imageurl = slot.metadata.imageurl
-		slot.metadata = type(metadata) == 'table' and metadata or { type = metadata or nil }
+	if inv and slotData then
+		local imageurl = slotData.metadata.imageurl
+		slotData.metadata = type(metadata) == 'table' and metadata or { type = metadata or nil }
 
 		if metadata.weight then
-			inv.weight -= slot.weight
-			slot.weight = Inventory.SlotWeight(Items(slot.name), slot)
-			inv.weight += slot.weight
+			inv.weight -= slotData.weight
+			slotData.weight = Inventory.SlotWeight(Items(slotData.name), slotData)
+			inv.weight += slotData.weight
 		end
 
 		if inv.player then
 			if server.syncInventory then server.syncInventory(inv) end
-			TriggerClientEvent('ox_inventory:updateSlots', inv.id, {{item = slot, inventory = inv.type}}, {left=inv.weight, right=inv.open and Inventories[inv.open]?.weight})
+			TriggerClientEvent('ox_inventory:updateSlots', inv.id, {{item = slotData, inventory = inv.type}}, {left=inv.weight, right=inv.open and Inventories[inv.open]?.weight})
 		end
 
 		if metadata.imageurl ~= imageurl and Utils.IsValidImageUrl then
 			if Utils.IsValidImageUrl(metadata.imageurl) then
-				Utils.DiscordEmbed('Valid image URL', ('Updated item "%s" (%s) with valid url in "%s".\n%s\nid: %s\nowner: %s'):format(metadata.label or slot.label, slot.name, inv.label, metadata.imageurl, inv.id, inv.owner, metadata.imageurl), metadata.imageurl, 65280)
+				Utils.DiscordEmbed('Valid image URL', ('Updated item "%s" (%s) with valid url in "%s".\n%s\nid: %s\nowner: %s'):format(metadata.label or slotData.label, slotData.name, inv.label, metadata.imageurl, inv.id, inv.owner, metadata.imageurl), metadata.imageurl, 65280)
 			else
-				Utils.DiscordEmbed('Invalid image URL', ('Updated item "%s" (%s) with invalid url in "%s".\n%s\nid: %s\nowner: %s'):format(metadata.label or slot.label, slot.name, inv.label, metadata.imageurl, inv.id, inv.owner, metadata.imageurl), metadata.imageurl, 16711680)
+				Utils.DiscordEmbed('Invalid image URL', ('Updated item "%s" (%s) with invalid url in "%s".\n%s\nid: %s\nowner: %s'):format(metadata.label or slotData.label, slotData.name, inv.label, metadata.imageurl, inv.id, inv.owner, metadata.imageurl), metadata.imageurl, 16711680)
 				metadata.imageurl = nil
 			end
 		end
 	end
 end
+
 exports('SetMetadata', Inventory.SetMetadata)
 
----@param inv table | string | number
+---@param inv inventory
+---@param slots number
+function Inventory.SetSlotCount(inv, slots)
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+	if not inv then return end
+	if type(slots) ~= 'number' then return end
+
+	inv.slots = slots
+end
+
+exports('SetSlotCount', Inventory.SetSlotCount)
+
+---@param inv inventory
+---@param maxWeight number
+function Inventory.SetMaxWeight(inv, maxWeight)
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+	if not inv then return end
+	if type(maxWeight) ~= 'number' then return end
+
+	inv.maxWeight = maxWeight
+end
+
+exports('SetMaxWeight', Inventory.SetMaxWeight)
+
+---@param inv inventory
 ---@param item table | string
 ---@param count number
 ---@param metadata? table | string
@@ -790,7 +856,7 @@ exports('SetMetadata', Inventory.SetMetadata)
 ---@return boolean? success, string|OxItem|nil response
 function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 	if type(item) ~= 'table' then item = Items(item) end
-	if type(inv) ~= 'table' then inv = Inventory(inv) end
+	inv = Inventory(inv) --[[@as OxInventory]]
 	count = math.floor(count + 0.5)
 	local success, response
 
@@ -803,10 +869,10 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 			local toSlot, slotMetadata, slotCount
 
 			if slot then
-				local slotItem = inv.items[slot]
+				local slotData = inv.items[slot]
 				slotMetadata, slotCount = Items.Metadata(inv.id, item, metadata and table.clone(metadata) or {}, count)
 
-				if not slotItem or (item.stack and slotItem.name == item.name and table.matches(slotItem.metadata, slotMetadata)) then
+				if not slotData or (item.stack and slotData.name == item.name and table.matches(slotData.metadata, slotMetadata)) then
 					toSlot = slot
 				end
 			end
@@ -816,12 +882,12 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 				slotMetadata, slotCount = Items.Metadata(inv.id, item, metadata and table.clone(metadata) or {}, count)
 
 				for i = 1, inv.slots do
-					local slotItem = items[i]
+					local slotData = items[i]
 
-					if item.stack and slotItem ~= nil and slotItem.name == item.name and table.matches(slotItem.metadata, slotMetadata) then
+					if item.stack and slotData ~= nil and slotData.name == item.name and table.matches(slotData.metadata, slotMetadata) then
 						toSlot = i
 						break
-					elseif not item.stack and not slotItem then
+					elseif not item.stack and not slotData then
 						if not toSlot then toSlot = {} end
 
 						toSlot[#toSlot + 1] = { slot = i, count = slotCount, metadata = slotMetadata }
@@ -832,7 +898,7 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 
 						count -= 1
 						slotMetadata, slotCount = Items.Metadata(inv.id, item, metadata and table.clone(metadata) or {}, count)
-					elseif not toSlot and not slotItem then
+					elseif not toSlot and not slotData then
 						toSlot = i
 						break
 					end
@@ -900,13 +966,14 @@ function Inventory.AddItem(inv, item, count, metadata, slot, cb)
 end
 exports('AddItem', Inventory.AddItem)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param search string|number slots|1, count|2
 ---@param items table | string
 ---@param metadata? table | string
 function Inventory.Search(inv, search, items, metadata)
 	if items then
-		inv = Inventory(inv)
+		inv = Inventory(inv) --[[@as OxInventory]]
+
 		if inv then
 			inv = inv.items
 
@@ -953,12 +1020,16 @@ function Inventory.Search(inv, search, items, metadata)
 end
 exports('Search', Inventory.Search)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param item table | string
 ---@param metadata? table
 function Inventory.GetItemSlots(inv, item, metadata)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+	if not inv then return end
+
 	local totalCount, slots, emptySlots = 0, {}, inv.slots
+
 	for k, v in pairs(inv.items) do
 		emptySlots -= 1
 		if v.name == item.name then
@@ -971,13 +1042,14 @@ function Inventory.GetItemSlots(inv, item, metadata)
 			end
 		end
 	end
+
 	return slots, totalCount, emptySlots
 end
 exports('GetItemSlots', Inventory.GetItemSlots)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param item table | string
----@param count number
+---@param count integer
 ---@param metadata? table | string
 ---@param slot? number
 ---@param ignoreTotal? boolean
@@ -987,7 +1059,7 @@ function Inventory.RemoveItem(inv, item, count, metadata, slot, ignoreTotal)
 	count = math.floor(count + 0.5)
 
 	if item and count > 0 then
-		inv = Inventory(inv)
+		inv = Inventory(inv) --[[@as OxInventory]]
 
 		if not inv then return false end
 
@@ -997,7 +1069,9 @@ function Inventory.RemoveItem(inv, item, count, metadata, slot, ignoreTotal)
 
 		local itemSlots, totalCount = Inventory.GetItemSlots(inv, item, metadata)
 
-		if count > totalCount then
+		if not itemSlots then return end
+
+		if totalCount and count > totalCount then
 			if not ignoreTotal then return false end
 
 			count = totalCount
@@ -1060,7 +1134,7 @@ function Inventory.RemoveItem(inv, item, count, metadata, slot, ignoreTotal)
 end
 exports('RemoveItem', Inventory.RemoveItem)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param item table | string
 ---@param count number
 ---@param metadata? table | string
@@ -1068,11 +1142,14 @@ function Inventory.CanCarryItem(inv, item, count, metadata)
 	if type(item) ~= 'table' then item = Items(item) end
 
 	if item then
-		inv = Inventory(inv)
+		inv = Inventory(inv) --[[@as OxInventory]]
 
 		if inv then
 			local itemSlots, _, emptySlots = Inventory.GetItemSlots(inv, item, type(metadata) == 'table' and metadata or { type = metadata or nil })
-			local weight = metadata?.weight or item.weight
+
+			if not itemSlots then return end
+
+			local weight = metadata and metadata.weight or item.weight
 
 			if next(itemSlots) or emptySlots > 0 then
 				if not count then count = 1 end
@@ -1093,38 +1170,46 @@ function Inventory.CanCarryItem(inv, item, count, metadata)
 end
 exports('CanCarryItem', Inventory.CanCarryItem)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param item table | string
 function Inventory.CanCarryAmount(inv, item)
     if type(item) ~= 'table' then item = Items(item) end
-    if item then
-        inv = Inventory(inv)
-            local availableWeight = inv.maxWeight - inv.weight
-            local canHold = math.floor(availableWeight / item.weight)
-            return canHold
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+    if inv and item then
+		local availableWeight = inv.maxWeight - inv.weight
+		return math.floor(availableWeight / item.weight)
     end
 end
+
 exports('CanCarryAmount', Inventory.CanCarryAmount)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param weight number
 function Inventory.CanCarryWeight(inv, weight)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+	if not inv then return end
+
 	local availableWeight = inv.maxWeight - inv.weight
 	local canHold = availableWeight >= weight
 	return canHold, availableWeight
 end
 exports('CanCarryWeight', Inventory.CanCarryWeight)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param firstItem string
 ---@param firstItemCount number
 ---@param testItem string
 ---@param testItemCount number
 function Inventory.CanSwapItem(inv, firstItem, firstItemCount, testItem, testItemCount)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+	if not inv then return end
+
 	local firstItemData = Inventory.GetItem(inv, firstItem)
 	local testItemData = Inventory.GetItem(inv, testItem)
+
 	if firstItemData and testItemData and firstItemData.count >= firstItemCount then
 		local weightWithoutFirst = inv.weight - (firstItemData.weight * firstItemCount)
 		local weightWithTest = weightWithoutFirst + (testItemData.weight * testItemCount)
@@ -1144,18 +1229,20 @@ end)
 
 Inventory.Drops = {}
 
-local function generateDropId()
+---@param prefix string?
+---@return string
+local function generateInvId(prefix)
 	while true do
-		local dropId = ('drop-%s'):format(math.random(100000, 999999))
+		local invId = ('%s-%s'):format(prefix or 'drop', math.random(100000, 999999))
 
-		if not Inventories[dropId] then return dropId end
+		if not Inventories[invId] then return invId end
 
 		Wait(0)
 	end
 end
 
 local function CustomDrop(prefix, items, coords, slots, maxWeight, instance, model)
-	local dropId = generateDropId()
+	local dropId = generateInvId()
 	local inventory = Inventory.Create(dropId, ('%s %s'):format(prefix, dropId:gsub('%D', '')), 'drop', slots or shared.playerslots, 0, maxWeight or shared.playerweight, false)
 	local items, weight = generateItems(inventory, 'drop', items)
 
@@ -1179,7 +1266,7 @@ exports('CreateDropFromPlayer', function(playerId)
 
 	if not playerInventory or not next(playerInventory.items) then return end
 
-	local dropId = generateDropId()
+	local dropId = generateInvId()
 	local inventory = Inventory.Create(dropId, ('Drop %s'):format(dropId:gsub('%D', '')), 'drop', playerInventory.slots, playerInventory.weight, playerInventory.maxWeight, false, table.clone(playerInventory.items))
 	local coords = GetEntityCoords(GetPlayerPed(playerId))
 	inventory.coords = vec3(coords.x, coords.y, coords.z-0.2)
@@ -1231,7 +1318,7 @@ local function dropItem(source, data)
 		playerInventory.weapon = nil
 	end
 
-	local dropId = generateDropId()
+	local dropId = generateInvId('drop')
 	local inventory = Inventory.Create(dropId, ('Drop %s'):format(dropId:gsub('%D', '')), 'drop', shared.playerslots, toData.weight, shared.playerweight, false, {[data.toSlot] = toData})
 	local coords = GetEntityCoords(GetPlayerPed(source))
 	inventory.coords = vec3(coords.x, coords.y, coords.z-0.2)
@@ -1440,7 +1527,7 @@ lib.callback.register('ox_inventory:swapItems', function(source, data)
 							if fromData.count > 0 then
 								toData.metadata = table.clone(toData.metadata)
 							end
-						else return false, 'cannot_carry' end
+						else return false, 'cannot_carry_other' end
 					end
 
 					if fromData and fromData.count < 1 then fromData = nil end
@@ -1588,11 +1675,12 @@ function Inventory.Return(source)
 end
 exports('ReturnInventory', Inventory.Return)
 
----@param inv table | string | number
+---@param inv inventory
 ---@param keep? string | string[] an item or list of items to ignore while clearing items
 function Inventory.Clear(inv, keep)
-	inv = Inventory(inv)
-	if not inv then return end
+	inv = Inventory(inv) --[[@as OxInventory]]
+
+	if not inv or not next(inv.items) then return end
 
 	local updateSlots = inv.player and {}
 	local newWeight = 0
@@ -1650,7 +1738,7 @@ function Inventory.Clear(inv, keep)
 	if not inv.player then
 		if inv.open then
 			local playerInv = Inventory(inv.open)
-			TriggerClientEvent('ox_inventory:closeInventory', inv.open, true)
+			TriggerClientEvent('ox_inventory:closeInventory', playerInv.id, true)
 			playerInv:set('open', false)
 		end
 
@@ -1668,7 +1756,7 @@ end
 exports('ClearInventory', Inventory.Clear)
 
 function Inventory.GetEmptySlot(inv)
-	inv = Inventory(inv)
+	inv = Inventory(inv) --[[@as OxInventory]]
 
 	if inv then
 		local items = inv.items
@@ -1726,7 +1814,7 @@ SetInterval(function()
 	db.saveInventories(parameters[1], parameters[2], parameters[3], parameters[4])
 end, 600000)
 
-local function saveInventories(lock)
+function server.saveInventories(lock)
 	local parameters = { {}, {}, {}, {} }
 	local size = { 0, 0, 0, 0 }
 	Inventory.Lock = lock or nil
@@ -1749,17 +1837,17 @@ end
 
 AddEventHandler('playerDropped', function()
 	if GetNumPlayerIndices() == 0 then
-		saveInventories()
+		server.saveInventories()
 	end
 end)
 
 AddEventHandler('txAdmin:events:serverShuttingDown', function()
-	saveInventories(true)
+	server.saveInventories(true)
 end)
 
 AddEventHandler('onResourceStop', function(resource)
 	if resource == shared.resource then
-		saveInventories(true)
+		server.saveInventories(true)
 	end
 end)
 
@@ -1797,6 +1885,7 @@ RegisterServerEvent('ox_inventory:giveItem', function(slot, target, count)
 			toType = toInventory.type,
 			count = data.count,
 			action = 'give',
+			fromSlot = data,
 		}) then
 			Inventory.RemoveItem(fromInventory, item, count, data.metadata, slot)
 			Inventory.AddItem(toInventory, item, count, data.metadata)
@@ -1810,7 +1899,7 @@ RegisterServerEvent('ox_inventory:giveItem', function(slot, target, count)
 	end
 end)
 
-RegisterServerEvent('ox_inventory:updateWeapon', function(action, value, slot)
+RegisterServerEvent('ox_inventory:updateWeapon', function(action, value, slot, specialAmmo)
 	local inventory = Inventories[source]
 
 	if not inventory then return end
@@ -1851,8 +1940,9 @@ RegisterServerEvent('ox_inventory:updateWeapon', function(action, value, slot)
 				local ammo = Items(weapon.name).ammoname
 				local diff = value - weapon.metadata.ammo
 
-				if Inventory.RemoveItem(inventory, ammo, diff) then
+				if Inventory.RemoveItem(inventory, ammo, diff, specialAmmo) then
 					weapon.metadata.ammo = value
+					weapon.metadata.specialAmmo = specialAmmo
 					weapon.weight = Inventory.SlotWeight(item, weapon)
 				end
 			elseif action == 'throw' then
@@ -1905,7 +1995,7 @@ lib.callback.register('ox_inventory:removeAmmoFromWeapon', function(source, slot
 
 	if not item or not item.ammoname then return end
 
-	if Inventory.AddItem(inventory, item.ammoname, slotData.metadata.ammo) then
+	if Inventory.AddItem(inventory, item.ammoname, slotData.metadata.ammo, { type = slotData.metadata.specialAmmo or nil }) then
 		slotData.metadata.ammo = 0
 		slotData.weight = Inventory.SlotWeight(item, slotData)
 
@@ -1917,119 +2007,45 @@ lib.callback.register('ox_inventory:removeAmmoFromWeapon', function(source, slot
 	end
 end)
 
-lib.addCommand('group.admin', {'additem', 'giveitem'}, function(source, args)
-	args.item = Items(args.item)
-	if args.item and args.count > 0 then
-		local metadata = args.metatype and { type = tonumber(args.metatype) or args.metatype }
-		local inventory = Inventories[args.target]
-
-		if not inventory then
-			return print(('No user is connected with the given id (%s)'):format(args.target))
-		end
-
-		if not Inventory.AddItem(inventory, args.item.name, args.count, metadata) then
-			return print(('Failed to give %sx %s to player %s'):format(args.count, args.item.name, args.target))
-		end
-
-		source = Inventories[source] or { label = 'console', owner = 'console' }
-
-		if server.loglevel > 0 then
-			lib.logger(source.owner, 'admin', ('"%s" gave %sx %s to "%s"'):format(source.label, args.count, args.item.name, inventory.label))
-		end
-	end
-end, {'target:number', 'item:string', 'count:number', 'metatype'})
-
-lib.addCommand('group.admin', 'removeitem', function(source, args)
-	args.item = Items(args.item)
-	if args.item and args.count > 0 then
-		local metadata = args.metatype and { type = tonumber(args.metatype) or args.metatype }
-		local inventory = Inventories[args.target]
-
-		if not inventory then
-			return print(('No user is connected with the given id (%s)'):format(args.target))
-		end
-
-		if not Inventory.RemoveItem(inventory, args.item.name, args.count, metadata, nil, true) then
-			return print(('Failed to remove %sx %s from player %s'):format(args.count, args.item.name, args.target))
-		end
-
-		source = Inventories[source] or {label = 'console', owner = 'console'}
-
-		if server.loglevel > 0 then
-			lib.logger(source.owner, 'admin', ('"%s" removed %sx %s from "%s"'):format(source.label, args.count, args.item.name, inventory.label))
-		end
-	end
-end, {'target:number', 'item:string', 'count:number', 'metatype'})
-
-lib.addCommand('group.admin', 'setitem', function(source, args)
-	args.item = Items(args.item)
-	if args.item and args.count >= 0 then
-		local inventory = Inventories[args.target]
-
-		if not inventory then
-			return print(('No user is connected with the given id (%s)'):format(args.target))
-		end
-
-		if not Inventory.SetItem(inventory, args.item.name, args.count, args.metaType) then
-			return print(('Failed to set %s count to %sx for player %s'):format(args.item.name, args.count, args.target))
-		end
-
-		source = Inventories[source] or {label = 'console', owner = 'console'}
-
-		if server.loglevel > 0 then
-			lib.logger(source.owner, 'admin', ('"%s" set "%s" %s count to %sx'):format(source.label, inventory.label, args.item.name, args.count))
-		end
-	end
-end, {'target:number', 'item:string', 'count:number', 'metatype:?string'})
-
-lib.addCommand(false, 'clearevidence', function(source, args)
-	local inventory = Inventories[source]
-	local hasPermission = false
-
-	if shared.framework == 'esx' then
-		-- todo: make it work
-	elseif shared.framework == 'qb' then
-		-- todo: make it work
-	else
-		local group, rank = server.hasGroup(inventory, shared.police)
-		---@diagnostic disable-next-line: undefined-field
-		if group and rank == GlobalState.groups[group] then hasPermission = true end
-	end
-
-	if hasPermission then
-		MySQL.query('DELETE FROM ox_inventory WHERE name = ?', {('evidence-%s'):format(args.evidence)})
-	end
-end, {'evidence:number'})
-
-lib.addCommand('group.admin', 'takeinv', function(source, args)
-	Inventory.Confiscate(args.target)
-end, {'target:number'})
-
-lib.addCommand('group.admin', 'returninv', function(source, args)
-	Inventory.Return(args.target)
-end, {'target:number'})
-
-lib.addCommand('group.admin', 'clearinv', function(source, args)
-	Inventory.Clear(tonumber(args.target) or args.target)
-end, {'target'})
-
-lib.addCommand('group.admin', 'saveinv', function(source, args)
-	saveInventories(args[1] == 1 or args[1] == 'true')
-end)
-
-lib.addCommand('group.admin', 'viewinv', function(source, args)
-	local inventory = Inventories[args.target] or Inventories[tonumber(args.target)]
-	TriggerClientEvent('ox_inventory:viewInventory', source, inventory)
-end, {'target'})
-
 Inventory.accounts = server.accounts
+
+local function checkStashProperties(properties)
+	local name, slots, maxWeight, coords in properties
+
+	if type(name) ~= 'string' then
+		error(('received %s for stash name (expected string)'):format(type(name)))
+	end
+
+	if type(slots) ~= 'number' then
+		error(('received %s for stash slots (expected number)'):format(type(slots)))
+	end
+
+	if type(maxWeight) ~= 'number' then
+		error(('received %s for stash maxWeight (expected number)'):format(type(maxWeight)))
+	end
+
+	if coords then
+		local typeof = type(coords)
+
+		if typeof ~= 'vector3' then
+			if typeof == 'table' then
+				coords = vec3(coords.x or coords[1], coords.y or coords[2], coords.z or coords[3])
+			else
+				error(('received %s for stash coords (expected vector3)'):format(typeof))
+			end
+		end
+	end
+
+	return name, slots, maxWeight, coords
+end
 
 ---@param name string stash identifier when loading from the database
 ---@param label string display name when inventory is open
 ---@param slots number
 ---@param maxWeight number
----@param owner string|boolean|nil
----@param groups table
+---@param owner? string|number|boolean
+---@param groups? table<string, number>
+---@param coords? vector3
 --- For simple integration with other resources that want to create valid stashes.
 --- This needs to be triggered before a player can open a stash.
 --- ```
@@ -2040,29 +2056,13 @@ Inventory.accounts = server.accounts
 ---
 --- groups: { ['police'] = 0 }
 --- ```
-local function RegisterStash(name, label, slots, maxWeight, owner, groups, coords)
-	if type(name) ~= 'string' then
-		error(('received %s for stash name (expected string)'):format(type(name)))
-	end
-
-	if not slots then
-		error(('received %s for stash slots (expected number)'):format(slots))
-	end
-
-	if not maxWeight then
-		error(('received %s for stash maxWeight (expected number)'):format(maxWeight))
-	end
-
-	if coords then
-		local typeof = type(coords)
-		if typeof ~= 'vector3' then
-			if typeof == 'table' then
-				coords = vec3(coords.x or coords[1], coords.y or coords[2], coords.z or coords[3])
-			else
-				error(('received %s for stash coords (expected vector3)'):format(typeof))
-			end
-		end
-	end
+local function registerStash(name, label, slots, maxWeight, owner, groups, coords)
+	name, slots, maxWeight, coords = checkStashProperties({
+		name = name,
+		slots = slots,
+		maxWeight = maxWeight,
+		coords = coords,
+	})
 
 	local curStash = RegisteredStashes[name]
 
@@ -2087,11 +2087,36 @@ local function RegisterStash(name, label, slots, maxWeight, owner, groups, coord
 		label = label,
 		owner = owner,
 		slots = slots,
-		weight = maxWeight,
+		maxWeight = maxWeight,
 		groups = groups,
 		coords = coords
 	}
 end
-exports('RegisterStash', RegisterStash)
+
+exports('RegisterStash', registerStash)
+
+---@class TemporaryStashProperties
+---@field label string
+---@field slots number
+---@field maxWeight number
+---@field owner? string|number|boolean
+---@field groups? table<string, number>
+---@field coords? vector3
+---@field items? { [number]: string, [number]: number, [number]: table | string }[]
+
+---@param properties TemporaryStashProperties
+function Inventory.CreateTemporaryStash(properties)
+	properties.name = generateInvId('temp')
+
+	local name, slots, maxWeight, coords = checkStashProperties(properties)
+	local inventory = Inventory.Create(name, properties.label, 'temp', slots, 0, maxWeight, properties.owner, {}, properties.groups)
+
+	inventory.items, inventory.weight = generateItems(inventory, 'drop', properties.items)
+	inventory.coords = coords
+
+	return inventory.id
+end
+
+exports('CreateTemporaryStash', Inventory.CreateTemporaryStash)
 
 server.inventory = Inventory

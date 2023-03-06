@@ -63,7 +63,8 @@ else
 		giveplayerlist = GetConvarInt('inventory:giveplayerlist', 0) == 1,
 		weaponanims = GetConvarInt('inventory:weaponanims', 1) == 1,
 		itemnotify = GetConvarInt('inventory:itemnotify', 1) == 1,
-		dropprops = GetConvarInt('inventory:dropprops', 0) == 1
+		dropprops = GetConvarInt('inventory:dropprops', 0) == 1,
+		weaponmismatch = GetConvarInt('inventory:weaponmismatch', 1) == 1,
 	}
 end
 
@@ -133,7 +134,7 @@ local success, msg = lib.checkDependency('oxmysql', '2.4.0')
 
 if not success then return spamError(msg) end
 
-success, msg = lib.checkDependency('ox_lib', '2.19.0')
+success, msg = lib.checkDependency('ox_lib', '3.0.0')
 
 if not success then spamError(msg) end
 

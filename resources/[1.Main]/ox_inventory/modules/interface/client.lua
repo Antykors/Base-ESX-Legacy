@@ -2,7 +2,6 @@ if not lib then return end
 
 -- Module is deprecated and provided for compatibility
 -- All functions are now part of with ox_lib
--- F.A.S.
 
 exports('Keyboard', lib.inputDialog)
 

@@ -17,45 +17,30 @@ local function vehicleIsCycle(vehicle)
 end
 
 function Weapon.Equip(item, data)
-	local playerPed, sleep = cache.ped, 200
+	local playerPed = cache.ped
+	local coords = GetEntityCoords(playerPed, true)
+
+	RequestWeaponAsset(data.hash, 31, 0)
+
+	while not HasWeaponAssetLoaded(data.hash) do Wait(0) end
 
 	if client.weaponanims then
 		if cache.vehicle and vehicleIsCycle(cache.vehicle) then
 			goto skipAnim
 		end
 
-		local coords = GetEntityCoords(playerPed, true)
 		local anim = data.anim or anims[GetWeapontypeGroup(data.hash)]
 
 		if anim == anims[`GROUP_PISTOL`] and not client.hasGroup(shared.police) then
 			anim = nil
 		end
 
-		sleep = anim and anim[3] or 1200
+		local sleep = anim and anim[3] or 1200
 
 		Utils.PlayAnimAdvanced(sleep, anim and anim[1] or 'reaction@intimidation@1h', anim and anim[2] or 'intro', coords.x, coords.y, coords.z, 0, 0, GetEntityHeading(playerPed), 8.0, 3.0, sleep*2, 50, 0.1)
 	end
 
 	::skipAnim::
-
-	SetPedAmmo(playerPed, data.hash, 0)
-	GiveWeaponToPed(playerPed, data.hash, 0, false, true)
-
-	if item.metadata.tint then SetPedWeaponTintIndex(playerPed, data.hash, item.metadata.tint) end
-
-	if item.metadata.components then
-		for i = 1, #item.metadata.components do
-			local components = Items[item.metadata.components[i]].client.component
-			for v=1, #components do
-				local component = components[v]
-				if DoesWeaponTakeWeaponComponent(data.hash, component) then
-					if not HasPedGotWeaponComponent(playerPed, data.hash, component) then
-						GiveWeaponComponentToPed(playerPed, data.hash, component)
-					end
-				end
-			end
-		end
-	end
 
 	item.hash = data.hash
 	item.ammo = data.ammoname
@@ -63,33 +48,63 @@ function Weapon.Equip(item, data)
 	item.timer = 0
 	item.throwable = data.throwable
 
-	SetCurrentPedWeapon(playerPed, data.hash, true)
-	SetPedCurrentWeaponVisible(playerPed, true, false, false, false)
-	SetWeaponsNoAutoswap(true)
-	TriggerEvent('ox_inventory:currentWeapon', item)
-	Utils.ItemNotify({item.metadata.label or item.label, item.metadata.image or item.name, 'ui_equipped'})
-
 	local ammo = item.metadata.ammo or item.throwable and 1 or 0
+	-- Create an object instead of adding the weapon directly to ped
+	-- Allows the components and ammo to be set more smoothly
+	local obj = CreateWeaponObject(data.hash, ammo, coords.x, coords.y, coords.z, true, 0.0, 0)
 
-	if ammo > 0 then AddAmmoToPed(playerPed, data.hash, ammo) end
+	if item.metadata.tint then SetWeaponObjectTintIndex(obj, item.metadata.tint) end
 
-	Wait(sleep)
-	RefillAmmoInstantly(playerPed)
+	if item.metadata.components then
+		for i = 1, #item.metadata.components do
+			local components = Items[item.metadata.components[i]].client.component
+			for v=1, #components do
+				local component = components[v]
+				if DoesWeaponTakeWeaponComponent(data.hash, component) then
+					if not HasWeaponGotWeaponComponent(obj, component) then
+						GiveWeaponComponentToWeaponObject(obj, component)
+					end
+				end
+			end
+		end
+	end
+
+	SetPedAmmo(playerPed, data.hash, 0)
+	GiveWeaponObjectToPed(obj, playerPed)
+	RemoveWeaponAsset(data.hash)
+
+	if item.metadata.specialAmmo then
+		local clipComponentKey = ('%s_CLIP'):format(data.model:gsub('WEAPON_', 'COMPONENT_'))
+		local specialClip = ('%s_%s'):format(clipComponentKey, item.metadata.specialAmmo:upper())
+
+		if DoesWeaponTakeWeaponComponent(data.hash, specialClip) then
+			GiveWeaponComponentToWeaponObject(obj, specialClip)
+		end
+	end
+
+	-- Sometimes the ammo fills or splits into reserves instead of loading into the weapon
+	-- Refilling without a timeout tends to lead to the weapon jamming
+	SetTimeout(0, function() RefillAmmoInstantly(playerPed) end)
 
 	if data.hash == `WEAPON_PETROLCAN` or data.hash == `WEAPON_HAZARDCAN` or data.hash == `WEAPON_FERTILIZERCAN` or data.hash == `WEAPON_FIREEXTINGUISHER` then
 		item.metadata.ammo = item.metadata.durability
 		SetPedInfiniteAmmo(playerPed, true, data.hash)
 	end
 
+	TriggerEvent('ox_inventory:currentWeapon', item)
+	Utils.ItemNotify({item.metadata.label or item.label, item.metadata.image or item.name, 'ui_equipped'})
+
 	return item
 end
 
 function Weapon.Disarm(currentWeapon, noAnim)
-	if source == '' then
-		TriggerServerEvent('ox_inventory:updateWeapon')
-	end
+	if currentWeapon?.timer then
+		currentWeapon.timer = nil
 
-	if currentWeapon then
+		if source == '' then
+			TriggerServerEvent('ox_inventory:updateWeapon')
+		end
+
 		SetPedAmmo(cache.ped, currentWeapon.hash, 0)
 
 		if client.weaponanims and not noAnim then
