@@ -71,7 +71,7 @@ local function table_merge(t1, t2)
     return t1
 end
 table.merge = table_merge
--- F.A.S.
+
 lib.table = table
 
 return table
