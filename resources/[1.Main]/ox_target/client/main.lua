@@ -26,9 +26,9 @@ local GetEntityType = GetEntityType
 local HasEntityClearLosToEntity = HasEntityClearLosToEntity
 local GetCurrentZone = GetCurrentZone
 local PlayerHasGroups = PlayerHasGroups or function() return true end
-local PlayerHasItems = PlayerHasItems or function() return true end
+local PlayerHasItems = PlayerHasItems
 local GetEntityBoneIndexByName = GetEntityBoneIndexByName
-local GetWorldPositionOfEntityBone = GetWorldPositionOfEntityBone
+local GetEntityBonePosition_2 = GetEntityBonePosition_2
 local next = next
 local GetEntityModel = GetEntityModel
 local GetEntityOptions = GetEntityOptions
@@ -148,7 +148,7 @@ local function enableTargeting()
                         hide = true
                     end
 
-                    if option.items and not PlayerHasItems(option.items) then
+                    if option.items and not PlayerHasItems(option.items, option.anyItem) then
                         hide = true
                     end
 
@@ -160,7 +160,7 @@ local function enableTargeting()
                         if _type == 'string' then
                             local boneId = GetEntityBoneIndexByName(entityHit, bone)
 
-                            if boneId ~= -1 and #(endCoords - GetWorldPositionOfEntityBone(entityHit, boneId)) <= 1 then
+                            if boneId ~= -1 and #(endCoords - GetEntityBonePosition_2(entityHit, boneId)) <= 2 then
                                 bone = boneId
                             else
                                 hide = true
@@ -172,7 +172,7 @@ local function enableTargeting()
                                 local boneId = GetEntityBoneIndexByName(entityHit, bone[j])
 
                                 if boneId ~= -1 then
-                                    local dist = #(endCoords - GetWorldPositionOfEntityBone(entityHit, boneId))
+                                    local dist = #(endCoords - GetEntityBonePosition_2(entityHit, boneId))
 
                                     if dist <= (boneDistance or 1) then
                                         closestBone = boneId

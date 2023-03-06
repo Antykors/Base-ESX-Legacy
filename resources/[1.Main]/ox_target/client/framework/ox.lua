@@ -5,6 +5,7 @@ local success, result = pcall(function()
 end)
 
 local playerGroups = success and result or {}
+PlayerItems = {}
 
 AddEventHandler('ox:playerLoaded', function(data)
     playerGroups = data.groups
@@ -46,37 +47,4 @@ function PlayerHasGroups(filter)
             end
         end
     end
-end
-
-local playerItems = setmetatable({}, {
-    __index = function(self, index)
-        self[index] = exports.ox_inventory:Search('count', index) or 0
-        return self[index]
-    end
-})
-
-AddEventHandler('ox_inventory:itemCount', function(name, count)
-    playerItems[name] = count
-end)
-
-function PlayerHasItems(filter)
-    local _type = type(filter)
-
-    if _type == 'string' then
-        if playerItems[filter] < 1 then return end
-    elseif _type == 'table' then
-        local tabletype = table.type(filter)
-
-        if tabletype == 'hash' then
-            for name, amount in pairs(filter) do
-                if playerItems[name] < amount then return end
-            end
-        elseif tabletype == 'array' then
-            for i = 1, #filter do
-                if playerItems[filter[i]] < 1 then return end
-            end
-        end
-    end
-
-    return true
 end

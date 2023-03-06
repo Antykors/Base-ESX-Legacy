@@ -40,7 +40,7 @@ local function addTarget(target, options, resource)
     if optionsType ~= 'table' then
         TypeError('options', 'table', optionsType)
     end
-    
+
     local tableType = table.type(options)
 
     if tableType ~= 'array' then
@@ -133,7 +133,7 @@ function target.addModel(arr, options)
 
     for i = 1, #arr do
         local model = arr[i]
-         model = tonumber(model) or joaat(model)
+        model = tonumber(model) or joaat(model)
 
         if not Models[model] then
             Models[model] = {}

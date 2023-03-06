@@ -3,7 +3,7 @@ local function exportHandler(exportName, func)
         setCB(func)
     end)
 end
--- F.A.S.
+
 ---@param options table
 ---@return table
 local function convert(options)
