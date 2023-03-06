@@ -30,7 +30,11 @@ RegisterNetEvent("skinchanger:getSkin", function(cb)
 end)
 
 RegisterNetEvent("skinchanger:loadSkin", function(skin, cb)
-	client.setPlayerAppearance(skin)
+    if skin.model then
+        client.setPlayerAppearance(skin)
+    else -- add validation invisible when failed registration (maybe server restarted when apply skin)
+        SetInitialClothes(Config.InitialPlayerClothes[Framework.GetGender(true)])
+    end
     Framework.CachePed()
 	if cb ~= nil then
 		cb()

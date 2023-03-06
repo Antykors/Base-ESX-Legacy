@@ -6,7 +6,7 @@ Framework.PlayerData = ESX.GetPlayerData()
 RegisterNetEvent("esx:playerLoaded", function(xPlayer)
     Framework.PlayerData = xPlayer
     client.job = Framework.PlayerData.job
-    client.gang = Framework.PlayerData.gang
+    client.gang = Framework.PlayerData.faction
     client.citizenid = Framework.PlayerData.identifier
     InitAppearance()
 end)
@@ -16,9 +16,9 @@ RegisterNetEvent("esx:onPlayerLogout", function()
 end)
 
 RegisterNetEvent("esx:setJob", function(job)
-    Framework.PlayerData.job = job
+	Framework.PlayerData.job = job
     client.job = Framework.PlayerData.job
-    client.gang = Framework.PlayerData.faction -- Ajout de la compatibilité avec les factions
+    client.gang = Framework.PlayerData.faction
 end)
 
 function Framework.GetPlayerGender()
@@ -34,7 +34,7 @@ function Framework.UpdatePlayerData()
     if data.job then
         Framework.PlayerData = data
         client.job = Framework.PlayerData.job
-        client.gang = Framework.PlayerData.job
+        client.gang = Framework.PlayerData.faction
     end
     client.citizenid = Framework.PlayerData.identifier
 end

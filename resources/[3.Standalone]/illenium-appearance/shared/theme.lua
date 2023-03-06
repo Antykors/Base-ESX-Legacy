@@ -1,5 +1,5 @@
 Config.Theme = {
-    currentTheme = "default",
+    currentTheme = "qb-core",
     themes = {
         {
             id = "default",

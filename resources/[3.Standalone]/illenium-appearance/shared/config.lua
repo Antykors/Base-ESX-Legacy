@@ -548,8 +548,7 @@ Config.Stores = {
             vector3(293.56317138672, -572.60675048828, 43.26),
             vector3(296.28656005859, -570.330078125, 43.26)
         }
-    },
-
+    }
 }
 
 
@@ -1163,6 +1162,7 @@ Config.Outfits = {
 
 Config.InitialPlayerClothes = {
     Male = {
+        Model = "mp_m_freemode_01",
         Components = {
             {
                 component_id = 0, -- Face
@@ -1260,6 +1260,7 @@ Config.InitialPlayerClothes = {
         }
     },
     Female = {
+        Model = "mp_f_freemode_01",
         Components = {
             {
                 component_id = 0, -- Face

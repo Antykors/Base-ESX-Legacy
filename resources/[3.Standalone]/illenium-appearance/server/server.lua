@@ -67,6 +67,9 @@ lib.callback.register("illenium-appearance:server:importOutfitCode", function(so
         return
     end
 
+    if playerOutfit.citizenid == citizenID then return end -- Validation when someone tried to duplicate own outfit
+    if Database.PlayerOutfits.GetByOutfit(outfitName, citizenID) then return end -- Validation duplicate outfit name, if validate on local id, someone can "spam error" server-sided
+
     local id = Database.PlayerOutfits.Add(citizenID, outfitName, playerOutfit.model, playerOutfit.components, playerOutfit.props)
 
     if not id then
@@ -105,16 +108,16 @@ lib.callback.register("illenium-appearance:server:payForTattoo", function(source
 
     if Framework.RemoveMoney(src, "cash", cost) then
         lib.notify(src, {
-            title = "Success",
-            description = "Purchased " .. tattoo.label .. " tattoo for " .. cost .. "$",
+            title = _L("purchase.tattoo.success.title"),
+            description = string.format(_L("purchase.tattoo.success.description"), tattoo.label, cost),
             type = "success",
             position = Config.NotifyOptions.position
         })
         return true
     else
         lib.notify(src, {
-            title = "Tattoo apply failed",
-            description = "You don't have enough money!",
+            title = _L("purchase.tattoo.failure.title"),
+            description = _L("purchase.tattoo.failure.description"),
             type = "error",
             position = Config.NotifyOptions.position
         })
@@ -172,15 +175,15 @@ RegisterServerEvent("illenium-appearance:server:chargeCustomer", function(shopTy
     local money = getMoneyForShop(shopType)
     if Framework.RemoveMoney(src, "cash", money) then
         lib.notify(src, {
-            title = "Success",
-            description = "Gave $" .. money .. " to " .. shopType .. "!",
+            title = _L("purchase.store.success.title"),
+            description = string.format(_L("purchase.store.success.description"), money, shopType),
             type = "success",
             position = Config.NotifyOptions.position
         })
     else
         lib.notify(src, {
-            title = "Exploit!",
-            description = "You didn't have enough money! Tried to exploit the system!",
+            title = _L("purchase.store.failure.title"),
+            description = _L("purchase.store.failure.description"),
             type = "error",
             position = Config.NotifyOptions.position
         })
@@ -206,8 +209,8 @@ RegisterNetEvent("illenium-appearance:server:saveOutfit", function(name, model, 
             props = props
         }
         lib.notify(src, {
-            title = "Success",
-            description = "Outfit " .. name .. " has been saved",
+            title = _L("outfits.save.success.title"),
+            description = string.format(_L("outfits.save.success.description"), name),
             type = "success",
             position = Config.NotifyOptions.position
         })
@@ -234,9 +237,8 @@ RegisterNetEvent("illenium-appearance:server:updateOutfit", function(id, model, 
             end
         end
         lib.notify(src, {
-            title = "Success",
-            description = "Outfit " .. outfitName .. " has been updated",
-
+            title = _L("outfits.update.success.title"),
+            description = string.format(_L("outfits.update.success.description"), outfitName),
             type = "success",
             position = Config.NotifyOptions.position
         })
@@ -251,8 +253,8 @@ RegisterNetEvent("illenium-appearance:server:saveManagementOutfit", function(out
     end
 
     lib.notify(src, {
-        title = "Success",
-        description = "Outfit " .. outfitData.Name .. " has been saved",
+        title = _L("outfits.save.success.title"),
+            description = string.format(_L("outfits.save.success.description"), outfitData.name),
         type = "success",
         position = Config.NotifyOptions.position
     })
@@ -300,7 +302,18 @@ RegisterNetEvent("illenium-appearance:server:ResetRoutingBucket", function()
 end)
 
 if Config.EnablePedMenu then
-    lib.addCommand(Config.PedMenuGroup, "pedmenu", function(source, args)
+    lib.addCommand("pedmenu", {
+        help = _L("commands.pedmenu.title"),
+        params = {
+            {
+                name = "playerID",
+                type = "number",
+                help = "Target player's server id",
+                optional = true
+            },
+        },
+        restricted = Config.PedMenuGroup
+    }, function(source, args)
         local target = source
         if args.playerID then
             local citizenID = Framework.GetPlayerID(args.playerID)
@@ -308,8 +321,8 @@ if Config.EnablePedMenu then
                 target = args.playerID
             else
                 lib.notify(source, {
-                    title = "Error",
-                    description = "Player not online",
+                    title = _L("commands.pedmenu.failure.title"),
+                    description = _L("commands.pedmenu.failure.description"),
                     type = "error",
                     position = Config.NotifyOptions.position
                 })
@@ -317,15 +330,15 @@ if Config.EnablePedMenu then
             end
         end
         TriggerClientEvent("illenium-appearance:client:openClothingShopMenu", target, true)
-    end, {"playerID:?number"}, "Open / Give Clothing Menu")
+    end)
 end
 
-lib.addCommand(false, "reloadskin", function(source)
+lib.addCommand("reloadskin", { help = _L("commands.reloadskin.title") }, function(source)
     TriggerClientEvent("illenium-appearance:client:reloadSkin", source)
-end, nil, "Reloads your character")
+end)
 
-lib.addCommand(false, "clearstuckprops", function(source)
+lib.addCommand("clearstuckprops", { help = _L("commands.clearstuckprops.title") }, function(source)
     TriggerClientEvent("illenium-appearance:client:ClearStuckProps", source)
-end, nil, "Removes all the props attached to the entity")
+end)
 
 lib.versionCheck("iLLeniumStudios/illenium-appearance")
