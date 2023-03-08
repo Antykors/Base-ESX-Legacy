@@ -690,5 +690,11 @@ return {
 		label = 'Carkey',
 		weight = 300,
 		stack = false
-},
+    },
+	
+    ['sim_card'] = {
+		label = 'Carte sim',
+		weight = 1,
+		stack = false
+    },
 }
