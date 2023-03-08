@@ -134,6 +134,7 @@ RegisterNetEvent('ts-adminmenu:server:giveCar', function(ply, props)
                 "You recieved a car with Plate: " .. vehProps.plate)
         end)
     end
+    exports['gflp10-carkeys']:AddCarkey(source, vehProps.plate)
 end)
 
 RegisterNetEvent('ts-adminmenu:server:SetPed', function(plyId, ped)
