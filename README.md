@@ -18,7 +18,10 @@ Base plug & play ESX Legacy
 - East_hud : (https://github.com/eastdev/east_hud) (Modification pour que la minimap ne s'affiche qu'en voiture) by eastdev
 - NPWD : (https://github.com/project-error/npwd) by project-error 
 - Gflp10-carkeys : (https://github.com/Fellow25/gflp10-carkeys) by Fellow25 
-- Interactions : https://github.com/daiguel/interactions by daiguel
+- Interactions : (https://github.com/daiguel/interactions) by daiguel
+- Fl_pause_menu : (https://github.com/At0mit0s/fl_pause_menu) by At0mit0s
+- Esx-sim-npwd : (https://github.com/Xxpromw3mtxX/esx-sim-npwd) by Xxpromw3mtxX
+
 
 Je n'ai rien inventé, cette base a été faite à base de toutes les ressources précédemment citées. Adaptées et traduites, ensemble elles forment une base facile à utiliser et rapide à mettre en place.
 
