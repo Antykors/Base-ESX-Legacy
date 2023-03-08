@@ -4080,6 +4080,48 @@ local LoadOnlinePlayersEach = function()
         end)
     end
 
+    -- SET FACTION
+    if IsPlayerAllowed('TSAdmin.OnlinePlyOptions.SetFaction') then
+
+        local onlineplayers_each_setfaction = onlineplayers_each:AddButton({
+            icon = '📗',
+            label = "Set Faction",
+            description = "Change Player Faction",
+            value = "setf",
+            false,
+            select = function(i)
+                lib.callback('ts-adminmenu:server:GetFactions', false, function(factions)
+                    local myMenu = {}
+                    for k, v in pairs(factions) do
+                        local grade = 0
+                        for i, j in pairs(v.grades) do
+                            grade = grade + 1
+                        end
+                        myMenu[v.label..' - '..v.name] = {
+                            description = 'Grades = '.. grade -1,
+                            arrow = true,
+                            event = 'ts-adminmenu:client:setfactiongrade',
+                            args = {
+                                faction = v.name,
+                                max = grade
+                            }
+                        }
+                    end
+                    lib.registerContext({
+                        id = 'factions_menu',
+                        title = 'TS Faction List',
+                        options = myMenu
+                    })
+                    
+                    lib.showContext('factions_menu')
+                end)
+            end
+        })
+        RegisterCommand('sfaction', function(source, args, raw)
+            TriggerServerEvent('ts-adminmenu:server:SetFaction', args[1], args[2], args[3])
+        end)
+    end
+
     RegisterNetEvent('ts-adminmenu:client:setgrade', function(data)
         local job = data.job
         local max = tonumber(data.max) - 1
@@ -4092,6 +4134,21 @@ local LoadOnlinePlayersEach = function()
                 return
             end
             TriggerServerEvent('ts-adminmenu:server:SetJob', selectedPlayer, job, grade)
+        end
+    end)
+
+    RegisterNetEvent('ts-adminmenu:client:setfactiongrade', function(data)
+        local faction = data.faction
+        local max = tonumber(data.max) - 1
+
+        local input = lib.inputDialog('TS Admin Menu', { "Max Grade: " .. max })
+
+        if input then
+            local grade = tonumber(input[1])
+            if grade == nil then
+                return
+            end
+            TriggerServerEvent('ts-adminmenu:server:SetFaction', selectedPlayer, faction, grade)
         end
     end)
 

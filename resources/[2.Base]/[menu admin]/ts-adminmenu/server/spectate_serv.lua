@@ -6,12 +6,15 @@ function getPlayerList()
 	for k,v in pairs(plyList) do
 		local job = v.job.name
 		local jobText = v.job.label .. " - " .. v.job.grade_label
+		local faction = v.faction.name
+		local jobText = v.faction.label .. " - " .. v.faction.grade_label
 
 		table.insert(players, {
 			serverId = v.playerId,
 			name = v.name .. " (" .. GetPlayerName(v.playerId) .. ")",
 			group = v.group,
 			jobText = jobText,
+			factionText = factionText,
 		})
 	end
 	--[[for _, serverId in pairs(GetPlayers()) do

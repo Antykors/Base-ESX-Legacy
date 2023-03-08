@@ -233,6 +233,11 @@ lib.callback.register('ts-adminmenu:server:GetJobs', function(source)
     return jobs
 end)
 
+lib.callback.register('ts-adminmenu:server:GetFactions', function(source)
+    local factions = ESX.GetFactions()
+    return factions
+end)
+
 RegisterNetEvent('ts-adminmenu:server:SetJob', function(pid, job, grade)
     local xPlayer = ESX.GetPlayerFromId(source)
     local job = job
@@ -271,6 +276,46 @@ RegisterNetEvent('ts-adminmenu:server:SetJob', function(pid, job, grade)
         TriggerEvent('Boost-Logs:SendLog', data)
     end
 end)
+
+RegisterNetEvent('ts-adminmenu:server:SetFaction', function(pid, faction, grade)
+    local xPlayer = ESX.GetPlayerFromId(source)
+    local faction = faction
+    local grade = tonumber(grade)
+    local yPlayer = ESX.GetPlayerFromId(pid)
+    local allowed = CheckAllowed(xPlayer.source, 'TSAdmin.OnlinePlyOptions.SetFaction')
+    if allowed then
+
+        if ESX.DoesFactionExist(faction, grade) then
+            local data = {
+                ['Player'] = xPlayer.source, -- You need to set source here
+                ['Target'] = yPlayer.source, -- You need to set source here
+                ['Log'] = 'adminmenu-setfaction', -- Log name
+                ['Title'] = 'Faction Logs', -- Title
+                ['Message'] = yPlayer.getName() .. ' was assigned faction ' .. faction .. ' grade: ' .. grade .. ' by ' ..
+                    xPlayer.getName(), -- Message
+                ['Color'] = 'blue' -- Set your color here check Config.Colors for available colors
+            }
+
+            TriggerEvent('Boost-Logs:SendLog', data)
+            yPlayer.setFaction(faction, grade)
+        else
+            xPlayer.showNotification("Faction or grade invalid!")
+        end
+    else
+        local data = {
+            ['Player'] = xPlayer.source, -- You need to set source here
+            ['Target'] = yPlayer.source, -- You need to set source here
+            ['Log'] = 'adminmenu-heal-err', -- Log name
+            ['Title'] = 'Faction Logs - ERR', -- Title
+            ['Message'] = "Unauthorized player triggered event: ts-adminmenu:server:SetFaction, Triggered By: " ..
+                xPlayer.getName(), -- Message
+            ['Color'] = 'red' -- Set your color here check Config.Colors for available colors
+        }
+
+        TriggerEvent('Boost-Logs:SendLog', data)
+    end
+end)
+
 RegisterNetEvent('ts-adminmenu:server:GiveAccMoney', function(pid, acc, amount)
     print("REACHSER")
     local xPlayer = ESX.GetPlayerFromId(source)
