@@ -4,9 +4,9 @@ local isMenuActive = false
 Citizen.CreateThread(function()
     while true do
 
-        if not openActive then 
-            DisplayRadar(true) -- Set Radar online
-        end 
+        --if not openActive then 
+            --DisplayRadar(true) -- Set Radar online
+        --end 
 
         if isMenuActive and not openActive then 
             SetPauseMenuActive(true) -- Set default pauseMenu true
@@ -18,7 +18,7 @@ Citizen.CreateThread(function()
             openActive = true -- Set true if it's not true
             isMenuActive = false -- Set Menu disable
             SetPauseMenuActive(false) -- Set default pauseMenu false
-            DisplayRadar(false) -- Set Radar disable
+            --DisplayRadar(false) -- Set Radar disable
 
             -- Send Datas 
             SendNUIMessage({
