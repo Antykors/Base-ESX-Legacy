@@ -14,7 +14,7 @@ Config.Crafting = true -- defines if crafting is enabled or not (true/false)
 Config.CraftingPos = vector3(129.3, -1283.8, 29.2) -- defines where the crafting menu is located
 
 Config.Blip = {
-    Pos = {x = 129.3, y = -1293.8, z = 29.2}, --defines where the blip is located
+    Pos = {x = 313.3, y = -2040.5, z = 20.9}, --defines where the blip is located
     Sprite = 121, -- define the sprite used by the blip (see https://docs.fivem.net/docs/game-references/blips/#blips for references)
     Color = 29, -- defines the color of the blip (see https://docs.fivem.net/docs/game-references/blips/#blip-colors for references)
     Display = 0, -- defines the display parameter of the blip (0 and 1 doesn't show the blip // 2 is on minimap and map // 4 is only on map // 5 is only on minimap)
@@ -25,19 +25,19 @@ Config.Blip = {
 -- Defines the zones for specific action/menus
 Config.Zones = {
     {
-        Pos   = vector3(95.2,-1293.2,29.2), -- defines where the boss menu is
+        Pos   = vector3(313.3,-2040.5,20.9), -- defines where the boss menu is
         Name  = "boss", -- /!\ DO NOT TOUCH /!\
     },
-    {
+    --[[{
         Pos   = vector3(105.1,-1303.3,28.7), -- defines where a zone is located /!\ STASHES ARE DEFINED IN CONFIG.STASHES /!\
         Name  = "cloakroom", -- used to decide wich zone to open in main.lua
-    }
+    }]]--
 }
 
 -- Defines the stashes
 Config.Stashes = {
     {
-        Pos = vector3(93.1,-1291.3,29.2), -- Defines the placement of the stashe
+        Pos = vector3(324.4,-2049.5,20.9), -- Defines the placement of the stashe
         name = "stashe_"..Config.Name, -- DO NOT TOUCH
         label = "Coffre", -- define the name of the stashe when opening the menu
         slots = 20, -- define number of slots available (diffrent items)
@@ -47,7 +47,7 @@ Config.Stashes = {
         enabled = true -- used to defined if stashe is enabled or disabled
     },
     {
-        Pos = vector3(108.7,-1304.4,28.7),
+        Pos = vector3(333.0,-2057.0,20.9),
         name = "stashe_"..Config.Name.."_personnal", -- DO NOT TOUCH
         label = "Coffre personnel",
         slots = 20,
@@ -64,7 +64,7 @@ Config.Stashes = {
         weight = 100000,
         specific = nil, -- shared
         faction = Config.Faction, -- for specified faction
-        enabled = true
+        enabled = false
     }
 }
 
