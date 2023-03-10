@@ -21,6 +21,7 @@ return {
 			{ name = 'ecola', price = 10 },
 			{ name = 'phone', price = 250 },
 			{ name = 'wallet', price = 50 },
+			{ name = 'sim_card', price = 25 },
 		}, locations = {
 			vec3(25.7, -1347.3, 29.49),
 			vec3(-3038.71, 585.9, 7.9),
