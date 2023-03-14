@@ -20,21 +20,21 @@ Config.AuthorizedVehicles = {
 Config.Zones = {
 
 	VehicleSpawner = {
-		Pos   = {x = 915.039, y = -162.187, z = 74.5},
+		Pos   = {x = 915.039, y = -162.187, z = -74.5},
 		Size  = {x = 1.0, y = 1.0, z = 1.0},
 		Color = {r = 204, g = 204, b = 0},
 		Type  = 36, Rotate = true
 	},
 
 	VehicleSpawnPoint = {
-		Pos     = {x = 911.108, y = -177.867, z = 74.283},
+		Pos     = {x = 911.108, y = -177.867, z = -74.283},
 		Size    = {x = 1.5, y = 1.5, z = 1.0},
 		Type    = -1, Rotate = false,
 		Heading = 225.0
 	},
 
 	VehicleDeleter = {
-		Pos   = {x = 908.317, y = -183.070, z = 73.201},
+		Pos   = {x = 908.317, y = -183.070, z = -73.201},
 		Size  = {x = 3.0, y = 3.0, z = 0.25},
 		Color = {r = 255, g = 0, b = 0},
 		Type  = 1, Rotate = false
