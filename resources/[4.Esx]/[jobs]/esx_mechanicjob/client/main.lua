@@ -55,7 +55,7 @@ end
 function OpenMechanicActionsMenu()
 	local elements = {
 		{unselectable = true, icon = "fas fa-gear", title = TranslateCap('mechanic')},
-		{icon = "fas fa-car",   title = TranslateCap('vehicle_list'),   value = 'vehicle_list'},
+		--{icon = "fas fa-car",   title = TranslateCap('vehicle_list'),   value = 'vehicle_list'},
 		{icon = "fas fa-shirt", title = TranslateCap('work_wear'),      value = 'cloakroom'},
 		{icon = "fas fa-shirt", title = TranslateCap('civ_wear'),       value = 'cloakroom2'},
 		{icon = "fas fa-box",   title = TranslateCap('deposit_stock'),  value = 'put_stock'},
