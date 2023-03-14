@@ -67,13 +67,13 @@ Config.Hospitals = {
 
 		Vehicles = {
 			{
-				Spawner = vector3(307.7, -1433.4, 30.0),
-				InsideShop = vector3(446.7, -1355.6, 43.5),
+				Spawner = vector3(307.7, -1433.4, -30.0),
+				InsideShop = vector3(446.7, -1355.6, -43.5),
 				Marker = {type = 36, x = 1.0, y = 1.0, z = 1.0, r = 100, g = 50, b = 200, a = 100, rotate = true},
 				SpawnPoints = {
-					{coords = vector3(297.2, -1429.5, 29.8), heading = 227.6, radius = 4.0},
-					{coords = vector3(294.0, -1433.1, 29.8), heading = 227.6, radius = 4.0},
-					{coords = vector3(309.4, -1442.5, 29.8), heading = 227.6, radius = 6.0}
+					{coords = vector3(297.2, -1429.5, -29.8), heading = 227.6, radius = 4.0},
+					{coords = vector3(294.0, -1433.1, -29.8), heading = 227.6, radius = 4.0},
+					{coords = vector3(309.4, -1442.5, -29.8), heading = 227.6, radius = 6.0}
 				}
 			}
 		},
